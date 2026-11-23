@@ -12,6 +12,7 @@ import 'package:m_mobilnost/core/accessibility/semantics_helpers.dart';
 import 'package:m_mobilnost/core/layout/breakpoints.dart';
 import 'package:m_mobilnost/core/layout/responsive_builder.dart';
 import 'package:m_mobilnost/core/network/connectivity_provider.dart';
+import 'package:m_mobilnost/core/network/route_geometry_service.dart';
 import 'package:m_mobilnost/core/utils/distance.dart';
 import 'package:m_mobilnost/core/utils/geo.dart';
 import 'package:m_mobilnost/core/utils/time_format.dart';
@@ -494,12 +495,25 @@ class _MapScreenState extends ConsumerState<MapScreen> {
             : highlightedLine.directions.firstOrNull)
         : null;
 
+    final routeGeometry = highlightedLine != null &&
+            highlightedDirection != null
+        ? ref.watch(
+            routeGeometryProvider(
+              '${highlightedLine.id}|${highlightedDirection.id}',
+            ),
+          )
+        : const AsyncData<List<LatLng>>(<LatLng>[]);
+    final roadPoints = routeGeometry.valueOrNull ??
+        highlightedDirection?.roadPolyline ??
+        highlightedDirection?.polyline ??
+        const <LatLng>[];
+
     final polylines = <Polyline>[
       if (highlightedLine != null &&
           highlightedDirection != null &&
-          highlightedDirection.polyline.length >= 2)
+          roadPoints.length >= 2)
         Polyline(
-          points: highlightedDirection.polyline,
+          points: roadPoints,
           strokeWidth: 6.5,
           borderStrokeWidth: 2,
           borderColor: Colors.white,

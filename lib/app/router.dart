@@ -252,6 +252,15 @@ final routerProvider = Provider<GoRouter>((ref) {
         ),
       ),
       GoRoute(
+        path: '/login',
+        parentNavigatorKey: _rootNavigatorKey,
+        pageBuilder: (context, state) => _adaptivePage(
+          context: context,
+          state: state,
+          child: const AccountScreen(),
+        ),
+      ),
+      GoRoute(
         path: '/guide',
         parentNavigatorKey: _rootNavigatorKey,
         pageBuilder: (context, state) => _adaptivePage(

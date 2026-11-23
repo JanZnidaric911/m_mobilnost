@@ -13,6 +13,7 @@ import 'package:m_mobilnost/core/accessibility/semantics_helpers.dart';
 import 'package:m_mobilnost/core/layout/breakpoints.dart';
 import 'package:m_mobilnost/core/layout/responsive_builder.dart';
 import 'package:m_mobilnost/core/network/connectivity_provider.dart';
+import 'package:m_mobilnost/core/network/route_geometry_service.dart';
 import 'package:m_mobilnost/core/utils/time_format.dart';
 import 'package:m_mobilnost/core/widgets/big_button.dart';
 import 'package:m_mobilnost/core/widgets/occupancy_strip.dart';
@@ -517,7 +518,12 @@ class _LineDetailScreenState extends ConsumerState<LineDetailScreen> {
     required List<BusPosition> buses,
   }) {
     final l10n = context.l10n;
-    final points = direction.polyline;
+    final routeGeometry = ref.watch(
+      routeGeometryProvider('${line.id}|${direction.id}'),
+    );
+    final points = routeGeometry.valueOrNull ??
+        direction.roadPolyline ??
+        direction.polyline;
     final fit = points.length >= 2
         ? CameraFit.bounds(
             bounds: LatLngBounds.fromPoints(points),

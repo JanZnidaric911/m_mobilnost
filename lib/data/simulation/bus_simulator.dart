@@ -96,7 +96,10 @@ class BusSimulator {
           direction: direction,
           date: now,
         );
-        final polylineMeters = GeoUtils.polylineLengthMeters(direction.polyline);
+          final simulationPolyline =
+              direction.roadPolyline ?? direction.polyline;
+          final polylineMeters =
+              GeoUtils.polylineLengthMeters(simulationPolyline);
 
         for (final trip in trips) {
           final delaySeconds = _delayModel.delaySecondsForTrip(
@@ -127,7 +130,8 @@ class BusSimulator {
 
           final elapsedSec = now.difference(effectiveStart).inSeconds;
           final progress = (elapsedSec / totalDurationSec).clamp(0.0, 1.0);
-          final pos = GeoUtils.interpolatePolyline(direction.polyline, progress);
+          final pos =
+              GeoUtils.interpolatePolyline(simulationPolyline, progress);
 
           // Identify the next stop ahead of the vehicle based on adjusted stop times.
           var nextIdx = direction.stopIds.length - 1;

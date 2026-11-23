@@ -13,6 +13,7 @@ class LineDirection {
     required this.terminalStopId,
     required this.stopIds,
     required this.polyline,
+    this.roadPolyline,
   });
 
   /// Unique direction ID (for example `6_out` or `6_in`).
@@ -29,6 +30,10 @@ class LineDirection {
 
   /// Geographic polyline coordinates used for map rendering and simulation.
   final List<LatLng> polyline;
+
+  /// Detailed road-following geometry. When available, this is used by the
+  /// map and vehicle simulator instead of the station-only [polyline].
+  final List<LatLng>? roadPolyline;
 }
 
 /// Represents a Marprom city bus line with brand color and bidirectional routes.

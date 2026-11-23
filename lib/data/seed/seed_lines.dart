@@ -31,6 +31,7 @@ BusLine _buildLine({
         terminalStopId: outboundStopIds.last,
         stopIds: outboundStopIds,
         polyline: _polylineFromStops(outboundStopIds),
+        roadPolyline: _roadPolylineFromStops(outboundStopIds),
       ),
       LineDirection(
         id: '${id}_in',
@@ -38,6 +39,7 @@ BusLine _buildLine({
         terminalStopId: inboundStopIds.last,
         stopIds: inboundStopIds,
         polyline: _polylineFromStops(inboundStopIds),
+        roadPolyline: _roadPolylineFromStops(inboundStopIds),
       ),
     ],
   );
@@ -47,6 +49,27 @@ List<LatLng> _polylineFromStops(List<String> stopIds) {
   return [
     for (final stopId in stopIds) seedStopsById[stopId]!.position,
   ];
+}
+
+List<LatLng> _roadPolylineFromStops(List<String> stopIds) {
+  final stops = _polylineFromStops(stopIds);
+  if (stops.length < 2) return stops;
+  final road = <LatLng>[];
+  for (var i = 0; i < stops.length - 1; i++) {
+    final from = stops[i];
+    final to = stops[i + 1];
+    if (i == 0) road.add(from);
+    for (var step = 1; step <= 8; step++) {
+      final t = step / 8;
+      road.add(
+        LatLng(
+          from.latitude + (to.latitude - from.latitude) * t,
+          from.longitude + (to.longitude - from.longitude) * t,
+        ),
+      );
+    }
+  }
+  return road;
 }
 
 /// Twelve fictional Maribor city bus lines serving all [seedStops].

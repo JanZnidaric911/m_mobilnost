@@ -47,6 +47,8 @@ class ShellScaffold extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color(0xFFB91C2C),
+        foregroundColor: Colors.white,
         title: Text(
           l10n.appTitle,
           overflow: TextOverflow.ellipsis,

@@ -13,7 +13,7 @@ abstract final class AppTheme {
       brightness: Brightness.light,
       primary: MarpromColors.transitBlue,
       onPrimary: Colors.white,
-      primaryContainer: const Color(0xFFD6E7F7),
+      primaryContainer: const Color(0xFFFFE0E4),
       onPrimaryContainer: MarpromColors.transitBlueDark,
       secondary: MarpromColors.mobilityGreen,
       onSecondary: Colors.white,

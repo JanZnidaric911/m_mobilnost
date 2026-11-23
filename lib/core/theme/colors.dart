@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 
 /// Core brand and semantic color constants for Marprom M Mobilnost 2.0.
 abstract final class MarpromColors {
-  /// Primary Marprom transit blue (WCAG AA/AAA on white: ~8.8:1).
-  static const Color transitBlue = Color(0xFF004B87);
+  /// Primary Marprom-inspired red, kept dark enough for WCAG contrast.
+  static const Color transitBlue = Color(0xFFB91C2C);
 
   /// Darker transit blue for containers and active states.
-  static const Color transitBlueDark = Color(0xFF00274A);
+  static const Color transitBlueDark = Color(0xFF7F1020);
 
   /// Lighter transit blue for dark-mode surfaces.
-  static const Color transitBlueLight = Color(0xFF7AC1FF);
+  static const Color transitBlueLight = Color(0xFFFF9AA5);
 
   /// Secondary mobility green (WCAG AA on white: ~6.3:1).
   static const Color mobilityGreen = Color(0xFF0B6E4F);

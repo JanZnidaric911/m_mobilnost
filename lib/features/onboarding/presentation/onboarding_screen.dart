@@ -265,19 +265,45 @@ class OnboardingScreen extends ConsumerWidget {
           ResponsiveContentContainer(
             child: ResponsiveBuilder(
               builder: (context, layoutSize, _) {
-                final header = Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      l10n.onboardingWelcomeTitle,
-                      style: Theme.of(context).textTheme.headlineSmall,
+                final header = Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(22),
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFF7F1020), Color(0xFFE13A4A)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
                     ),
-                    const SizedBox(height: 6),
-                    Text(
-                      l10n.onboardingWelcomeSubtitle,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Icon(
+                        Icons.directions_bus_filled_rounded,
+                        color: Colors.white,
+                        size: 38,
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        l10n.onboardingWelcomeTitle,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall
+                            ?.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w800,
+                            ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        l10n.onboardingWelcomeSubtitle,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              color: Colors.white,
+                            ),
+                      ),
+                    ],
+                  ),
                 );
 
                 if (layoutSize == ScreenLayoutSize.expanded) {
