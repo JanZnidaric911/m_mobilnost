@@ -1,0 +1,741 @@
+{
+  "@@locale": "sl",
+  "appTitle": "M Mobilnost",
+  "@appTitle": {
+    "description": "Application title"
+  },
+  "appBrand": "M Mobilnost 2.0 • Marprom",
+  "languageNameSl": "Slovenščina",
+  "languageNameEn": "English",
+  "languageNameDe": "Deutsch",
+  "languageNameSrLatn": "Srpski / Hrvatski",
+
+  "navHome": "Domov",
+  "navMap": "Zemljevid",
+  "navPlan": "Načrtuj",
+  "navTickets": "Vozovnice",
+  "navLines": "Linije",
+  "navNotices": "Obvestila",
+  "navSettings": "Nastavitve",
+  "navAccount": "Račun",
+  "navMore": "Več",
+
+  "commonLoading": "Nalaganje ...",
+  "commonEmpty": "Ni podatkov za prikaz.",
+  "commonErrorTitle": "Prišlo je do napake",
+  "commonErrorBody": "Podatkov trenutno ni bilo mogoče naložiti. Preverite povezavo in poskusite znova.",
+  "commonRetry": "Poskusi znova",
+  "commonCancel": "Prekliči",
+  "commonConfirm": "Potrdi",
+  "commonContinue": "Nadaljuj",
+  "commonBack": "Nazaj",
+  "commonClose": "Zapri",
+  "commonSave": "Shrani",
+  "commonDone": "Končano",
+  "commonSkip": "Preskoči",
+  "commonNext": "Naprej",
+  "commonPrevious": "Prejšnji",
+  "commonSearch": "Išči",
+  "commonClear": "Počisti",
+  "commonRefresh": "Osveži",
+  "commonFilter": "Filtriraj",
+  "commonAll": "Vse",
+  "commonFavorites": "Priljubljene",
+  "commonShowMore": "Prikaži več",
+  "commonShowLess": "Prikaži manj",
+  "commonYes": "Da",
+  "commonNo": "Ne",
+  "commonOk": "V redu",
+  "commonEdit": "Uredi",
+  "commonDelete": "Izbriši",
+  "commonAdd": "Dodaj",
+  "commonRemove": "Odstrani",
+  "commonEnable": "Omogoči",
+  "commonDisable": "Onemogoči",
+  "commonPlaceholderNotice": "Ta zaslon bo dopolnjen v naslednji fazi razvoja.",
+  "commonMinutesShort": "{minutes} min",
+  "@commonMinutesShort": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+  "commonHoursShort": "{hours} h",
+  "@commonHoursShort": {
+    "placeholders": {
+      "hours": { "type": "int" }
+    }
+  },
+  "commonSecondsShort": "{seconds} s",
+  "@commonSecondsShort": {
+    "placeholders": {
+      "seconds": { "type": "int" }
+    }
+  },
+  "commonMetersShort": "{meters} m",
+  "@commonMetersShort": {
+    "placeholders": {
+      "meters": { "type": "int" }
+    }
+  },
+  "commonKilometersShort": "{km} km",
+  "@commonKilometersShort": {
+    "placeholders": {
+      "km": { "type": "String" }
+    }
+  },
+  "commonMinutesPlural": "{count, plural, =0{manj kot minuto} one{{count} minuta} two{{count} minuti} few{{count} minute} other{{count} minut}}",
+  "@commonMinutesPlural": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "commonStopsPlural": "{count, plural, =0{0 postajališč} one{{count} postajališče} two{{count} postajališči} few{{count} postajališča} other{{count} postajališč}}",
+  "@commonStopsPlural": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "commonTransfersPlural": "{count, plural, =0{brez prestopanja} one{{count} prestop} two{{count} prestopa} few{{count} prestopi} other{{count} prestopov}}",
+  "@commonTransfersPlural": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "commonBusesPlural": "{count, plural, =0{ni avtobusov} one{{count} avtobus} two{{count} avtobusa} few{{count} avtobusi} other{{count} avtobusov}}",
+  "@commonBusesPlural": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "commonUpdatedAgo": "Posodobljeno pred {time}",
+  "@commonUpdatedAgo": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+  "commonLastUpdatedAt": "Nazadnje posodobljeno: {time}",
+  "@commonLastUpdatedAt": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+  "commonJustNow": "pravkar",
+
+  "statusEarly": "Zgodaj",
+  "statusOnTime": "Točno",
+  "statusLate": "Zamuda",
+  "statusInfo": "Info",
+  "statusWarning": "Opozorilo",
+  "statusDisruption": "Motnja",
+  "statusCancelled": "Odpovedano",
+  "statusDetour": "Obvoz",
+  "statusOffline": "Brez povezave",
+  "statusOnline": "Povezano",
+  "statusEarlyByMinutes": "{minutes} min zgodaj",
+  "@statusEarlyByMinutes": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+  "statusLateByMinutes": "+{minutes} min zamude",
+  "@statusLateByMinutes": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+  "statusArrivingNow": "Prihaja zdaj",
+  "statusDepartingIn": "Odhod čez {minutes} min",
+  "@statusDepartingIn": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+
+  "badgeOfflineTitle": "Delovanje brez povezave",
+  "badgeOfflineBody": "Prikazani so predpomnjeni vozni redi in shranjene vozovnice.",
+  "badgeOfflineLastSync": "Zadnja sinhronizacija: {time}",
+  "@badgeOfflineLastSync": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+  "badgeSimulatedLabel": "Simulirani podatki",
+  "badgeSimulatedTooltip": "Prikazani so simulirani podatki v živo za namene predstavitve in testiranja.",
+  "badgeSimulatedDisclaimer": "Viri v živo so v načinu simulacije. Časi so informativni.",
+  "freshnessLive": "Podatki v živo",
+  "freshnessSimulated": "Simulirano v živo",
+  "freshnessCached": "Predpomnjeno",
+  "freshnessStale": "Morda zastareli podatki",
+  "freshnessLiveDisabledFallback": "Podatki v živo niso na voljo, prikazan je vozni red",
+
+  "occupancyLabel": "Zasedenost",
+  "occupancyLow": "Veliko prostih mest",
+  "occupancyMedium": "Zmerno zasedeno",
+  "occupancyHigh": "Zelo zasedeno",
+  "occupancyFull": "Avtobus je poln",
+  "occupancyUnknown": "Zasedenost ni znana",
+
+  "onboardingWelcomeTitle": "Dobrodošli v M Mobilnost 2.0",
+  "onboardingWelcomeSubtitle": "Vaš dostopen in zanesljiv vodnik za mestne avtobuse Marprom v Mariboru.",
+  "onboardingChooseLanguage": "Izberite jezik aplikacije",
+  "onboardingAccessibilityTitle": "Prilagoditve dostopnosti",
+  "onboardingAccessibilitySubtitle": "Aplikacijo lahko prilagodite zdaj ali kadarkoli v nastavitvah.",
+  "onboardingLocationTitle": "Lokacija in zasebnost",
+  "onboardingLocationSubtitle": "Dovoli lokacijo za najbližja postajališča ali izberi ročni mariborski način brez GPS.",
+  "onboardingUseGps": "Uporabi GPS lokacijo",
+  "onboardingUseManualLocation": "Ročna izbira postajališča (brez GPS)",
+  "onboardingStartRiding": "Začni z vožnjo",
+  "onboardingOpenGuide": "Prvič z avtobusom? Odpri vodič",
+
+  "guideTitle": "Prvič z avtobusom",
+  "guideSubtitle": "Kratek vodnik v 5 korakih za brezskrbno vožnjo po Mariboru.",
+  "guideCardProgress": "Korak {current} od {total}",
+  "@guideCardProgress": {
+    "placeholders": {
+      "current": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "guideCard1Title": "1. Poiščite postajališče in linijo",
+  "guideCard1Body": "Preverite najbližje postajališče na zemljevidu ali na seznamu linij. Vsi odhodi kažejo smer vožnje in številko linije.",
+  "guideCard2Title": "2. Kupite ali pripravite vozovnico",
+  "guideCard2Body": "Vozovnico lahko kupite v zavihku Vozovnice. Ob vstopu jo pripravite na zaslonu s povečano svetlostjo za hitro odčitavanje QR kode.",
+  "guideCard3Title": "3. Vstopite pri prvih vratih",
+  "guideCard3Body": "Ko avtobus prihaja, vozniku jasno nakažite željo po vstopu. Vstopite pri sprednjih vratih in potrdite vozovnico.",
+  "guideCard4Title": "4. Spremljajte vožnjo v živo",
+  "guideCard4Body": "V sledilniku v živo vidite naslednja postajališča, predviden prihod in opozorilo pred izstopom.",
+  "guideCard5Title": "5. Izstop in prestopanje",
+  "guideCard5Body": "Pred želenim postajališčem pritisnite gumb STOP. Pri prestopanju preverite opozorilo za kratek čas prestopa.",
+  "guideFinishCta": "Razumem, začnimo",
+
+  "homeGreeting": "Kam gremo danes?",
+  "homeSearchHint": "Kam želite potovati ali katero linijo iščete?",
+  "homeFavoriteStops": "Priljubljena postajališča",
+  "homeNearbyStops": "Najbližja postajališča",
+  "homeQuickActions": "Hitre možnosti",
+  "homeActiveTicket": "Aktivna vozovnica",
+  "homeNoActiveTicket": "Trenutno nimate aktivne vozovnice",
+  "homeNearestStopAction": "Najbližja postaja",
+  "homePlanTripAction": "Načrtuj pot",
+  "homeBuyTicketAction": "Kupi vozovnico",
+  "homeLinesAction": "Linije in vozni redi",
+  "homeGuideAction": "Prvič z avtobusom",
+  "homeAskMarpromAction": "Vprašaj Marprom",
+
+  "askTitle": "Vprašaj Marprom",
+  "askSubtitle": "Hiter pomočnik za linije, odhode in vozovnice",
+  "askInputHint": "Vprašajte npr. Kdaj gre naslednji avtobus 6?",
+  "askSend": "Pošlji",
+  "askVoicePrompt": "Govori zdaj ...",
+  "askSample1": "Kdaj pelje naslednji avtobus z Glavnega trga?",
+  "askSample2": "Katera vozovnica je najugodnejša za danes?",
+  "askSample3": "Ali so danes kakšne motnje ali obvozi?",
+  "askSample4": "Kje je najbližje postajališče?",
+  "askClearChat": "Počisti pogovor",
+  "askDisclaimer": "Odgovori temeljijo na lokalnih podatkih Marprom in simulaciji v živo.",
+  "askNoMatch": "Na to vprašanje nimam točnega odgovora. Poskusite vprašati o liniji, postajališču, vozovnici ali motnjah.",
+
+  "linesTitle": "Linije in vozni redi",
+  "linesSearchHint": "Išči linijo ali končno postajo ...",
+  "linesBadge": "Linija {code}",
+  "@linesBadge": {
+    "placeholders": {
+      "code": { "type": "String" }
+    }
+  },
+  "linesDirectionLabel": "Smer",
+  "linesSwapDirection": "Obrni smer",
+  "linesScheduleWeekday": "Delavnik",
+  "linesScheduleSaturday": "Sobota",
+  "linesScheduleSunday": "Nedelja / praznik",
+  "linesFirstBus": "Prvi odhod",
+  "linesLastBus": "Zadnji odhod",
+  "linesLowFloor": "Nizkopodni avtobus",
+  "linesFavoriteAdd": "Dodaj med priljubljene",
+  "linesFavoriteRemove": "Odstrani iz priljubljenih",
+  "linesNoDepartures": "Za izbrani dan ni več odhodov.",
+
+  "mapTitle": "Zemljevid postajališč",
+  "mapSwitchToList": "Seznam",
+  "mapSwitchToMap": "Zemljevid",
+  "mapSearchHint": "Išči postajališče ali ulico ...",
+  "mapCenterOnMe": "Moja lokacija",
+  "mapManualCenter": "Center Maribora",
+  "mapFilterAccessible": "Dostopno za invalide",
+  "mapFilterActiveBuses": "Avtobusi v živo",
+  "mapStopDetailsOpen": "Odpri odhode postajališča",
+
+  "stopTitle": "Postajališče",
+  "stopPlatform": "Peron {platform}",
+  "@stopPlatform": {
+    "placeholders": {
+      "platform": { "type": "String" }
+    }
+  },
+  "stopUpcomingDepartures": "Prihajajoči odhodi",
+  "stopAmenitiesTitle": "Oprema postajališča",
+  "stopAmenityShelter": "Nadstrešnica",
+  "stopAmenityBench": "Klop",
+  "stopAmenityTactile": "Taktilne oznake",
+  "stopAmenityStepFree": "Dostop brez stopnic",
+  "stopAmenityDisplay": "Digitalni prikazovalnik",
+  "stopNoDepartures": "V naslednjih urah ni načrtovanih odhodov.",
+
+  "trackerTitle": "Sledenje v živo",
+  "trackerFollowBus": "Sledi avtobusu",
+  "trackerNextStop": "Naslednje postajališče",
+  "trackerStopsRemaining": "Preostala postajališča",
+  "trackerEta": "Predviden prihod",
+  "trackerScheduledTime": "Po voznem redu: {time}",
+  "@trackerScheduledTime": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+  "trackerNotifyMe": "Obvesti me",
+  "trackerNotifyCancel": "Prekliči opomnik",
+  "trackerNotifyActive": "Opomnik nastavljen: obvestilo pred prihodom.",
+  "trackerNotifyPrompt": "Izberite kdaj želite opozorilo pred prihodom avtobusa.",
+  "trackerAdviceEarlyTitle": "Avtobus vozi pred voznim redom",
+  "trackerAdviceEarlyBody": "Avtobus je {minutes} min zgodaj. Če ste še na poti, preverite naslednji odhod ali se takoj odpravite na postajališče.",
+  "@trackerAdviceEarlyBody": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+  "trackerAdviceOnTimeTitle": "Avtobus vozi po voznem redu",
+  "trackerAdviceOnTimeBody": "Pričakujte prihod ob načrtovanem času.",
+  "trackerAdviceLateTitle": "Avtobus ima zamudo",
+  "trackerAdviceLateBody": "Avtobus zamuja {minutes} min. Lahko počakate na postajališču ali spodaj preverite nadomestno povezavo.",
+  "@trackerAdviceLateBody": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+  "trackerAdviceReviewAlternatives": "Preveri druge možnosti",
+
+  "planTitle": "Načrtovalnik poti",
+  "planOriginLabel": "Začetna točka",
+  "planDestinationLabel": "Cilj",
+  "planCurrentLocation": "Trenutna lokacija",
+  "planSwap": "Zamenjaj začetek in cilj",
+  "planLeaveNow": "Odhod zdaj",
+  "planDepartAt": "Odhod ob",
+  "planArriveBy": "Prihod do",
+  "planAccessibleOnly": "Samo dostopne poti brez stopnic",
+  "planFewerTransfers": "Manj prestopanj",
+  "planFindRoutes": "Poišči povezave",
+  "planTightTransferTitle": "Tesno prestopanje",
+  "planTightTransferBody": "Za prestop imate le {minutes} min. Ob manjši zamudi prvega avtobusa lahko povezavo zamudite.",
+  "@planTightTransferBody": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+  "planWhatDoINextTitle": "Kaj naj naredim zdaj?",
+  "planStepWalkTo": "Peš do postajališča {stop} ({distance})",
+  "@planStepWalkTo": {
+    "placeholders": {
+      "stop": { "type": "String" },
+      "distance": { "type": "String" }
+    }
+  },
+  "planStepBoardLine": "Vstopite na linijo {line} v smeri {direction}",
+  "@planStepBoardLine": {
+    "placeholders": {
+      "line": { "type": "String" },
+      "direction": { "type": "String" }
+    }
+  },
+  "planStepRideStops": "Peljite se {stops} do postajališča {stop}",
+  "@planStepRideStops": {
+    "placeholders": {
+      "stops": { "type": "String" },
+      "stop": { "type": "String" }
+    }
+  },
+  "planStepTransferAt": "Prestopite na postajališču {stop}",
+  "@planStepTransferAt": {
+    "placeholders": {
+      "stop": { "type": "String" }
+    }
+  },
+  "planStepGetOffAt": "Izstopite na postajališču {stop}",
+  "@planStepGetOffAt": {
+    "placeholders": {
+      "stop": { "type": "String" }
+    }
+  },
+  "planStepArrived": "Prispeli ste na cilj.",
+
+  "nearestStopTitle": "Najbližje postajališče",
+  "nearestStopDistance": "Oddaljenost: {distance}",
+  "@nearestStopDistance": {
+    "placeholders": {
+      "distance": { "type": "String" }
+    }
+  },
+  "nearestStopWalkTime": "Približno {minutes} min hoje",
+  "@nearestStopWalkTime": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+  "nearestStopNextBus": "Naslednji odhod",
+  "nearestStopUseManual": "Izberi postajališče ročno",
+
+  "ticketsTitle": "Moje vozovnice",
+  "ticketsActiveTab": "Aktivne",
+  "ticketsHistoryTab": "Pretekle",
+  "ticketsBuyButton": "Kupi vozovnico",
+  "ticketsShopTitle": "Nakup vozovnic",
+  "ticketsCheckoutTitle": "Zaključek nakupa",
+  "ticketsViewTitle": "Veljavna vozovnica",
+  "ticketsZoneMaribor": "Cona Maribor",
+  "ticketsValidUntil": "Velja do {time}",
+  "@ticketsValidUntil": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+  "ticketsQrHint": "Prislonite QR kodo k validatorju na avtobusu.",
+  "ticketsBrightnessBoosted": "Svetlost zaslona je začasno povečana za lažje branje kode.",
+  "ticketsNfcStubTitle": "Brezstično potrjevanje (NFC)",
+  "ticketsNfcStubBody": "Simulacija NFC potrditve ob vstopu. Prislonite telefon k čitalcu.",
+  "ticketsNfcTapToSimulate": "Simuliraj NFC dotik",
+  "ticketsNfcValidated": "Vozovnica je uspešno potrjena.",
+  "ticketsQuantity": "Količina",
+  "ticketsTotalPrice": "Skupaj za plačilo",
+  "ticketsPayNow": "Plačaj zdaj",
+  "ticketsPurchaseSuccess": "Vozovnica je kupljena in pripravljena za uporabo.",
+  "ticketsMinorTitle": "Potrditev staršev ali skrbnika",
+  "ticketsMinorUnder16Warning": "Osebe mlajše od 16 let potrebujejo potrditev starša ali zakonitega skrbnika za spletno plačilo.",
+  "ticketsMinorUnder18Notice": "Mladoletne osebe med 16. in 18. letom morajo potrditi soglasje za digitalne nakupe.",
+  "ticketsMinorGuardianConfirm": "Potrjujem, da imam soglasje starša ali skrbnika.",
+  "ticketsMinorGuardianEmail": "E-pošta starša ali skrbnika",
+
+  "paymentsTitle": "Načini plačila",
+  "paymentsAddMethod": "Dodaj način plačila",
+  "paymentsDefaultBadge": "Privzeto",
+  "paymentsSimulatedNotice": "Vsi plačilni tokovi so v tem prototipu lokalno simulirani.",
+
+  "accountTitle": "Uporabniški račun",
+  "accountGuestMode": "Način gosta",
+  "accountSignIn": "Prijava",
+  "accountSignOut": "Odjava",
+  "accountManagePayments": "Upravljaj plačila",
+  "accountGdprTitle": "Zasebnost in soglasja (GDPR)",
+  "accountGdprDescription": "Upravljajte svoja soglasja za analitiko, obvestila in obdelavo podatkov.",
+  "accountGdprAnalytics": "Anonimna analitika uporabe",
+  "accountGdprNotifications": "Potisna obvestila o zamudah",
+  "accountGdprExport": "Izvozi moje podatke",
+  "accountGdprDelete": "Izbriši lokalne podatke",
+  "accountGdprPrivacyLink": "Politika zasebnosti",
+
+  "noticesTitle": "Obvestila in pametni opomniki",
+  "noticesAllTab": "Vsa obvestila",
+  "noticesDisruptionsTab": "Motnje",
+  "noticesSmartAlertsTitle": "Pametni opomniki",
+  "noticesSmartAlertsDesc": "Prejmite opozorilo pred prihodom vašega avtobusa, ob motnjah na priljubljeni liniji in pred iztekom vozovnice.",
+  "noticesMarkAllRead": "Označi vse kot prebrano",
+  "noticesEmpty": "Trenutno ni novih obvestil.",
+  "noticesAffectedLines": "Prizadete linije: {lines}",
+  "@noticesAffectedLines": {
+    "placeholders": {
+      "lines": { "type": "String" }
+    }
+  },
+
+  "settingsTitle": "Nastavitve",
+  "settingsSectionAppearance": "Videz",
+  "settingsSectionLanguage": "Jezik",
+  "settingsSectionAccessibility": "Dostopnost in glas",
+  "settingsSectionData": "Podatki in lokacija",
+  "settingsSectionPrivacy": "Zasebnost",
+  "settingsSectionUsability": "Testiranje uporabnosti in demo",
+  "settingsThemeMode": "Barvna tema",
+  "settingsThemeSystem": "Sistemska",
+  "settingsThemeLight": "Svetla",
+  "settingsThemeDark": "Temna",
+  "settingsThemeHighContrast": "Visok kontrast (AAA)",
+  "settingsLanguage": "Jezik vmesnika",
+  "settingsExtraLargeText": "Zelo veliko besedilo (do 200 %)",
+  "settingsExtraLargeTextDesc": "Poveča pisavo v celotni aplikaciji za boljšo berljivost.",
+  "settingsReducedMotion": "Zmanjšano gibanje",
+  "settingsReducedMotionDesc": "Onemogoči animacije in prehode zaslonov.",
+  "settingsReadAloud": "Glasno branje (TTS)",
+  "settingsReadAloudDesc": "Prebere ključna navodila, odhode in opozorila.",
+  "settingsVoiceInput": "Glasovni vnos",
+  "settingsVoiceInputDesc": "Omogoči iskanje postajališč in vprašanj z glasom.",
+  "settingsHapticAlerts": "Haptična opozorila",
+  "settingsHapticAlertsDesc": "Različni vzorci tresljajev za prihod, zamudo, iztek vozovnice in motnje.",
+  "settingsSoundAlerts": "Zvočna opozorila (izbirno)",
+  "settingsSoundAlertsDesc": "Predvaja kratek zvočni signal ob pomembnih obvestilih.",
+  "settingsShowDataSource": "Prikaži vir podatkov",
+  "settingsShowDataSourceDesc": "Označi, ali so podatki v živo, simulirani ali predpomnjeni.",
+  "settingsUseSimulatedLive": "Simulirani podatki v živo",
+  "settingsUseSimulatedLiveDesc": "Uporabi deterministični lokalni simulator vozil Marprom.",
+  "settingsSimulationSeed": "Seme simulacije",
+  "settingsLocationManual": "Ročni način lokacije",
+  "settingsLocationManualDesc": "Uporabi izbrano postajališče namesto senzorja GPS.",
+  "settingsUsabilityTestMode": "Način testiranja uporabnosti",
+  "settingsUsabilityTestModeDesc": "Prikaže hitra orodja za preizkušanje scenarijev, ponastavitev uvoda in preklop stanja.",
+  "settingsResetOnboarding": "Ponastavi uvodni zaslon",
+  "settingsOpenGuide": "Odpri vodnik Prvič z avtobusom",
+
+  "a11yBackButton": "Nazaj na prejšnji zaslon",
+  "a11yCloseButton": "Zapri",
+  "a11ySearchField": "Polje za iskanje",
+  "a11yVoiceSearchButton": "Glasovno iskanje",
+  "a11yReadAloudButton": "Preberi na glas",
+  "a11yFavoriteToggle": "Preklopi priljubljeno",
+  "a11yQrCode": "QR koda vozovnice za odčitavanje na validatorju",
+  "a11yLineBadge": "Avtobusna linija {code}",
+  "@a11yLineBadge": {
+    "placeholders": {
+      "code": { "type": "String" }
+    }
+  },
+  "a11yOccupancyBar": "Zasedenost avtobusa: {level}",
+  "@a11yOccupancyBar": {
+    "placeholders": {
+      "level": { "type": "String" }
+    }
+  },
+  "a11yStatusChip": "Status: {label}",
+  "@a11yStatusChip": {
+    "placeholders": {
+      "label": { "type": "String" }
+    }
+  },
+  "a11yOfflineBanner": "Opozorilo o delovanju brez povezave",
+  "a11ySimulatedBadge": "Oznaka simuliranih podatkov",
+  "a11yProfileButton": "Odpri uporabniški račun",
+  "a11yNoticesButton": "Odpri obvestila",
+  "a11ySettingsButton": "Odpri nastavitve",
+  "a11ySwapStations": "Zamenjaj začetno in ciljno postajališče",
+
+  "homeNextBusSummary": "Naslednji avtobus proti {destination}: linija {line} čez {minutes} min, {meters} m stran",
+  "@homeNextBusSummary": {
+    "placeholders": {
+      "destination": { "type": "String" },
+      "line": { "type": "String" },
+      "minutes": { "type": "int" },
+      "meters": { "type": "int" }
+    }
+  },
+  "homeNoFavoriteStops": "Še nimate priljubljenih postajališč. Dodajte jih na zemljevidu ali voznem redu.",
+  "homeNextDepartures": "Naslednji odhodi",
+  "homeActiveDisruptionAlert": "Opozorilo o motnji na vaši priljubljeni liniji",
+
+  "linesFollowBusLive": "Sledi avtobusu v živo",
+  "linesOccupancyBySegment": "Zasedenost po odsekih poti",
+  "linesDirectionTo": "Smer: {destination}",
+  "@linesDirectionTo": {
+    "placeholders": {
+      "destination": { "type": "String" }
+    }
+  },
+  "stopAddToFavorites": "Dodaj med priljubljene",
+  "stopRemoveFromFavorites": "Odstrani iz priljubljenih",
+  "stopPlanFromHere": "Načrtuj pot od tukaj",
+  "stopSelectDay": "Izberi dan",
+  "stopAllLines": "Vse linije",
+  "stopLiveAndScheduledNote": "Časi združujejo zamude v živo s stalnim voznim redom.",
+
+  "mapLocationDeniedTitle": "Dostop do lokacije ni na voljo",
+  "mapLocationDeniedBody": "Aplikacijo lahko še vedno uporabljate v celoti z ročno izbiro začetnega postajališča.",
+  "mapSelectManualStop": "Izberi začetno postajališče",
+  "mapFollowingLine": "Prikaz poti za linijo {code}",
+  "@mapFollowingLine": {
+    "placeholders": {
+      "code": { "type": "String" }
+    }
+  },
+  "mapTapStopHint": "Dotaknite se postajališča za odhode ali avtobusa za ogled trase.",
+  "mapNoNearbyStops": "Na tem območju ni najdenih postajališč.",
+  "mapListDistance": "{distance} stran",
+  "@mapListDistance": {
+    "placeholders": {
+      "distance": { "type": "String" }
+    }
+  },
+
+  "trackerSelectLineOrStop": "Izberite linijo ali postajališče za sledenje v živo",
+  "trackerDistanceAndEta": "{distance} stran • približno {minutes} min",
+  "@trackerDistanceAndEta": {
+    "placeholders": {
+      "distance": { "type": "String" },
+      "minutes": { "type": "int" }
+    }
+  },
+  "trackerNotifyMinutesAway": "Obvesti {minutes} min pred prihodom",
+  "@trackerNotifyMinutesAway": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+  "trackerNoActiveBuses": "Na tej liniji trenutno ni aktivnih avtobusov.",
+  "trackerEarlyActionTip": "Ta avtobus je {minutes} min zgodaj. Lahko odpelje pred voznim redom. Na postajališču bodite {arriveEarlyMin} min prej.",
+  "@trackerEarlyActionTip": {
+    "placeholders": {
+      "minutes": { "type": "int" },
+      "arriveEarlyMin": { "type": "int" }
+    }
+  },
+  "trackerLateActionTip": "Ta avtobus zamuja {minutes} min. Predviden prihod ob {time}.",
+  "@trackerLateActionTip": {
+    "placeholders": {
+      "minutes": { "type": "int" },
+      "time": { "type": "String" }
+    }
+  },
+  "trackerNextStepCardTitle": "Naslednji korak na vaši poti",
+  "trackerGetOffNextStop": "Izstopite na naslednjem postajališču: {stop}",
+  "@trackerGetOffNextStop": {
+    "placeholders": {
+      "stop": { "type": "String" }
+    }
+  },
+  "trackerAlertFiredBanner": "Avtobus {line} je {minutes} min oddaljen od {stop}!",
+  "@trackerAlertFiredBanner": {
+    "placeholders": {
+      "line": { "type": "String" },
+      "minutes": { "type": "int" },
+      "stop": { "type": "String" }
+    }
+  },
+
+  "planNoResultsTitle": "Povezava ni najdena",
+  "planNoResultsBody": "Za izbrani čas ni ustrezne avtobusne povezave. Poskusite s hojo do vozlišča ali počakajte na naslednji odhod.",
+  "planTryWalkFurther": "Išči z daljšo hojo",
+  "planTryWaitNext": "Preveri poznejše odhode",
+  "planWalkTimeAndDistance": "Hoja {minutes} min ({distance})",
+  "@planWalkTimeAndDistance": {
+    "placeholders": {
+      "minutes": { "type": "int" },
+      "distance": { "type": "String" }
+    }
+  },
+  "planDataReliability": "Zanesljivost podatkov: {source}",
+  "@planDataReliability": {
+    "placeholders": {
+      "source": { "type": "String" }
+    }
+  },
+  "planTransferWaitMinutes": "Čakanje na prestop: {minutes} min na {stop}",
+  "@planTransferWaitMinutes": {
+    "placeholders": {
+      "minutes": { "type": "int" },
+      "stop": { "type": "String" }
+    }
+  },
+  "planOptionSummary": "{totalMin} min • {transfers} • {walkDistance} hoje",
+  "@planOptionSummary": {
+    "placeholders": {
+      "totalMin": { "type": "int" },
+      "transfers": { "type": "String" },
+      "walkDistance": { "type": "String" }
+    }
+  },
+  "planSelectOrigin": "Izberi začetek",
+  "planSelectDestination": "Izberi cilj",
+  "nearestStopGoalHint": "Poiščite najbližje postajališče z avtobusom do vašega cilja",
+  "nearestStopSortedByArrival": "Razvrščeno po najzgodnejšem prihodu",
+  "nearestStopArrivesAt": "Prihod ob {time}",
+  "@nearestStopArrivesAt": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+
+  "ticketsAuthRequiredTitle": "Za nakup je potreben račun",
+  "ticketsAuthRequiredBody": "Vrste vozovnic si lahko ogledate kot gost. Prijavite se ali ustvarite brezplačen testni račun za nakup in shranjevanje.",
+  "ticketsStepChoose": "1. Vozovnica",
+  "ticketsStepPayment": "2. Plačilo",
+  "ticketsStepConfirm": "3. Potrditev",
+  "ticketsValidFromUntil": "Velja od {from} do {until}",
+  "@ticketsValidFromUntil": {
+    "placeholders": {
+      "from": { "type": "String" },
+      "until": { "type": "String" }
+    }
+  },
+  "ticketsStartNow": "Velja takoj (priporočeno)",
+  "ticketsStartLater": "Izberi čas začetka",
+  "ticketsTabUpcoming": "Prihajajoče",
+  "ticketsTabExpired": "Potekle",
+  "ticketsDriverFallbackCode": "Nadomestna koda za voznika: {code}",
+  "@ticketsDriverFallbackCode": {
+    "placeholders": {
+      "code": { "type": "String" }
+    }
+  },
+  "ticketsLiveClockNote": "Ura v živo preprečuje zlorabo posnetkov zaslona",
+  "ticketsNfcComingSoon": "Kartica NFC v aplikaciji bo kmalu na voljo",
+  "ticketsDemoPaymentNotice": "Demo plačilo — pravi denar se ne bremeni",
+  "ticketsNoActiveTickets": "Trenutno nimate aktivnih vozovnic.",
+  "ticketsNoUpcomingTickets": "Ni prihajajočih vozovnic.",
+  "ticketsNoExpiredTickets": "Ni poteklih vozovnic.",
+  "ticketsRemainingTime": "Preostane: {time}",
+  "@ticketsRemainingTime": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+  "paymentsCard": "Plačilna kartica",
+  "paymentsGooglePay": "Google Pay",
+  "paymentsApplePay": "Apple Pay",
+  "paymentsBankTransfer": "Bančno nakazilo / spletna banka",
+  "paymentsMobilePay": "Mobilno plačilo",
+  "paymentsCardBrandLabel": "Znamka kartice (npr. Visa)",
+  "paymentsLast4Label": "Samo zadnje 4 številke (demo)",
+  "paymentsLast4Validation": "Vnesite natančno 4 številke",
+  "paymentsSetDefault": "Nastavi kot privzeto",
+  "accountSignUp": "Ustvari račun",
+  "accountPasswordReset": "Ponastavi geslo",
+  "accountDeleteAccount": "Izbriši moj račun in podatke",
+  "accountDeleteConfirmTitle": "Izbrisati račun in vse lokalne podatke?",
+  "accountDeleteConfirmBody": "To izbriše vaš testni profil, shranjene vozovnice, plačilne kartice in nastavitve s te naprave.",
+  "accountNameLabel": "Ime in priimek",
+  "accountEmailLabel": "E-poštni naslov",
+  "accountPasswordLabel": "Geslo",
+  "accountDobLabel": "Datum rojstva",
+  "accountDemoAccountHint": "Demo uporabnik: demo@marprom.test / demo1234",
+  "accountYouthEligible": "Upravičeni do mladinske / študentske cene",
+  "accountSeniorEligible": "Upravičeni do upokojenske cene",
+  "accountResetSent": "Testna povezava za ponastavitev gesla pripravljena za {email}.",
+  "@accountResetSent": {
+    "placeholders": {
+      "email": { "type": "String" }
+    }
+  },
+  "accountSaveProfile": "Shrani profil",
+
+  "onboardingConsentLocation": "Dovoli lokacijo med uporabo aplikacije za najbližja postajališča (v testnem načinu ne zapusti naprave)",
+  "onboardingConsentNotifications": "Dovoli opozorila za prihod, zamudo in iztek vozovnice",
+  "onboardingConsentAnalytics": "Izbirna anonimna statistika uporabe (privzeto izklopljeno)",
+  "onboardingAccountOptionalNote": "Račun je zdaj neobvezen in potreben šele pozneje ob nakupu vozovnice.",
+  "noticesTriggerAlternative": "Poišči drugo pot",
+  "noticesSmartBusArriving": "Opozorilo ob skorajšnjem prihodu avtobusa",
+  "noticesSmartLineDelayed": "Opozorilo ob zamudi priljubljene linije",
+  "noticesSmartTicketExpiring": "Opozorilo pred iztekom vozovnice",
+  "noticesPreviewVibration": "Preizkusi vizualno in vibracijsko opozorilo",
+  "settingsClearLocalData": "Počisti lokalni predpomnilnik",
+  "settingsClearLocalDataDone": "Lokalni predpomnilnik je počiščen.",
+  "settingsAboutTitle": "O aplikaciji M Mobilnost 2.0",
+  "settingsAboutBody": "Dostopen enotni prototip javnega prevoza in vozovnic Marprom za Maribor. Simulirani podatki v živo so jasno označeni.",
+  "settingsUsabilityStart": "Začni merjeni scenarij",
+  "settingsUsabilityFinish": "Zaključi scenarij",
+  "settingsUsabilityRecordError": "Zabeleži napako (+1)",
+  "settingsUsabilityExportCsv": "Izvozi CSV",
+  "settingsUsabilityExportJson": "Izvozi JSON",
+  "settingsUsabilitySummary": "Čas: {seconds} s • Dotiki: {taps} • Napake: {errors}",
+  "@settingsUsabilitySummary": {
+    "placeholders": {
+      "seconds": { "type": "int" },
+      "taps": { "type": "int" },
+      "errors": { "type": "int" }
+    }
+  }
+}
