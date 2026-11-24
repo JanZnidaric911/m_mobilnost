@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 /// Headings use heavier weights with slightly tightened tracking so they read
 /// as a modern product, while body copy keeps generous line height.
 abstract final class MarpromTextStyles {
+  /// Bundled brand typeface (Plus Jakarta Sans, SIL OFL 1.1).
+  static const String fontFamily = 'PlusJakartaSans';
+
   /// Returns a [TextTheme] tuned for transit legibility in the given [foreground].
   static TextTheme buildTextTheme(Color foreground, Color secondary) {
     return TextTheme(

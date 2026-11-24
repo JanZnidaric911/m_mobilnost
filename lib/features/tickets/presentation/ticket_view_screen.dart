@@ -14,11 +14,14 @@ import '../../../core/accessibility/haptic_cues.dart';
 import '../../../core/accessibility/read_aloud.dart';
 import '../../../core/accessibility/semantics_helpers.dart';
 import '../../../core/layout/responsive_builder.dart';
+import '../../../core/theme/brand_tokens.dart';
 import '../../../core/theme/colors.dart';
 import '../../../core/utils/time_format.dart';
 import '../../../core/widgets/big_button.dart';
+import '../../../core/widgets/motion.dart';
 import '../../../core/widgets/state_views.dart';
 import '../../../core/widgets/status_chip.dart';
+import '../../../core/widgets/ui_kit.dart';
 import '../../../data/models/ticket.dart';
 import '../../../data/repositories/repository_providers.dart';
 import '../../../l10n/app_localizations.dart';
@@ -209,20 +212,55 @@ class _TicketViewScreenState extends ConsumerState<TicketViewScreen> {
       TicketStatus.expired => Duration.zero,
     };
 
+    final theme = Theme.of(context);
+    final tone = switch (status) {
+      TicketStatus.active => TicketPassTone.active,
+      TicketStatus.upcoming => TicketPassTone.upcoming,
+      TicketStatus.expired => TicketPassTone.expired,
+    };
+    final onHeader = Colors.white.withValues(alpha: 0.85);
+
     return ListView(
+      padding: const EdgeInsets.only(bottom: 32),
       children: [
         ResponsiveContentContainer(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
+              FadeSlideIn(
+                child: TicketPass(
+                  tone: tone,
+                  header: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Text(
+                        'MARPROM',
+                        style: theme.textTheme.labelSmall?.copyWith(
+                          color: onHeader,
+                          letterSpacing: 1.6,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        ticket.localizedTitle(locale),
+                        style: theme.textTheme.headlineSmall?.copyWith(
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        TimeFormatUtils.formatEur(ticket.priceEur, locale: locale),
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          color: onHeader,
+                        ),
+                      ),
+                    ],
+                  ),
+                  stub: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
                       Wrap(
-                        alignment: WrapAlignment.spaceBetween,
+                        alignment: WrapAlignment.center,
                         crossAxisAlignment: WrapCrossAlignment.center,
                         spacing: 8,
                         runSpacing: 8,
@@ -235,144 +273,128 @@ class _TicketViewScreenState extends ConsumerState<TicketViewScreen> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 10),
-                      Text(
-                        ticket.localizedTitle(locale),
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        TimeFormatUtils.formatEur(
-                          ticket.priceEur,
-                          locale: locale,
-                        ),
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              color: scheme.primary,
+                      const SizedBox(height: 16),
+                      // High-contrast crisp white QR container so scanners read
+                      // reliably even in dark/AAA themes.
+                      Center(
+                        child: Semantics(
+                          image: true,
+                          label: l10n.a11yQrCode,
+                          child: Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                color: statusColors.highContrastBorders
+                                    ? Colors.black
+                                    : const Color(0xFFEAE4E5),
+                                width:
+                                    statusColors.highContrastBorders ? 3 : 1.5,
+                              ),
                             ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              // High-contrast crisp white QR container so scanners read reliably even in dark/AAA themes.
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    children: [
-                      Semantics(
-                        image: true,
-                        label: l10n.a11yQrCode,
-                        child: Container(
-                          padding: const EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(18),
-                            border: Border.all(
-                              color: Colors.black,
-                              width: statusColors.highContrastBorders ? 3 : 1.5,
-                            ),
-                          ),
-                          child: QrImageView(
-                            data: ticket.qrPayload,
-                            size: 240,
-                            backgroundColor: Colors.white,
-                            errorCorrectionLevel: QrErrorCorrectLevel.M,
-                            semanticsLabel: l10n.a11yQrCode,
-                            eyeStyle: const QrEyeStyle(
-                              eyeShape: QrEyeShape.square,
-                              color: Colors.black,
-                            ),
-                            dataModuleStyle: const QrDataModuleStyle(
-                              dataModuleShape: QrDataModuleShape.square,
-                              color: Colors.black,
+                            child: QrImageView(
+                              data: ticket.qrPayload,
+                              size: 232,
+                              backgroundColor: Colors.white,
+                              errorCorrectionLevel: QrErrorCorrectLevel.M,
+                              semanticsLabel: l10n.a11yQrCode,
+                              eyeStyle: const QrEyeStyle(
+                                eyeShape: QrEyeShape.square,
+                                color: Colors.black,
+                              ),
+                              dataModuleStyle: const QrDataModuleStyle(
+                                dataModuleShape: QrDataModuleShape.square,
+                                color: Colors.black,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 14),
+                      const SizedBox(height: 12),
                       Text(
                         l10n.ticketsQrHint,
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyLarge,
+                        style: theme.textTheme.bodyMedium,
                       ),
                       if (_brightnessBoosted) ...[
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 6),
                         Text(
                           l10n.ticketsBrightnessBoosted,
                           textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodyMedium,
+                          style: theme.textTheme.bodySmall,
                         ),
                       ],
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        spacing: 10,
-                        runSpacing: 8,
-                        children: [
-                          if (settings.reducedMotion)
-                            Icon(
-                              Icons.verified_user_rounded,
-                              color: scheme.primary,
-                              size: 26,
-                            )
-                          else
-                            AnimatedOpacity(
-                              opacity: _pulseOn ? 1.0 : 0.4,
-                              duration: const Duration(milliseconds: 350),
-                              child: Icon(
-                                Icons.verified_user_rounded,
-                                color: scheme.primary,
-                                size: 26,
-                              ),
-                            ),
-                          Text(
-                            liveSecondsClock,
-                            style: Theme.of(context)
-                                .textTheme
-                                .displaySmall
-                                ?.copyWith(
-                                  fontFeatures: const [
-                                    FontFeature.tabularFigures(),
-                                  ],
-                                ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        l10n.ticketsLiveClockNote,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      const Divider(height: 22),
-                      Text(
-                        l10n.ticketsValidFromUntil(validFromStr, validUntilStr),
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                      if (status != TicketStatus.expired) ...[
-                        const SizedBox(height: 8),
-                        Text(
-                          l10n.ticketsRemainingTime(
-                            formatTicketCountdown(remainingDuration),
-                          ),
-                          style:
-                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                      const SizedBox(height: 18),
+                      // Live anti-screenshot clock.
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
+                        decoration: BoxDecoration(
+                          color: MarpromBrand.of(context).subtleFill,
+                          borderRadius:
+                              BorderRadius.circular(MarpromRadii.md),
+                        ),
+                        child: Column(
+                          children: [
+                            Wrap(
+                              alignment: WrapAlignment.center,
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              spacing: 10,
+                              runSpacing: 6,
+                              children: [
+                                if (settings.reducedMotion)
+                                  Icon(
+                                    Icons.verified_user_rounded,
                                     color: scheme.primary,
+                                    size: 24,
+                                  )
+                                else
+                                  AnimatedOpacity(
+                                    opacity: _pulseOn ? 1.0 : 0.4,
+                                    duration: const Duration(milliseconds: 350),
+                                    child: Icon(
+                                      Icons.verified_user_rounded,
+                                      color: scheme.primary,
+                                      size: 24,
+                                    ),
+                                  ),
+                                Text(
+                                  liveSecondsClock,
+                                  style: theme.textTheme.displaySmall?.copyWith(
                                     fontFeatures: const [
                                       FontFeature.tabularFigures(),
                                     ],
                                   ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              l10n.ticketsLiveClockNote,
+                              textAlign: TextAlign.center,
+                              style: theme.textTheme.bodySmall,
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        l10n.ticketsValidFromUntil(validFromStr, validUntilStr),
+                        style: theme.textTheme.bodyLarge,
+                      ),
+                      if (status != TicketStatus.expired) ...[
+                        const SizedBox(height: 6),
+                        Text(
+                          l10n.ticketsRemainingTime(
+                            formatTicketCountdown(remainingDuration),
+                          ),
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            color: scheme.primary,
+                            fontFeatures: const [FontFeature.tabularFigures()],
+                          ),
                         ),
                       ],
                       const SizedBox(height: 12),
@@ -380,14 +402,19 @@ class _TicketViewScreenState extends ConsumerState<TicketViewScreen> {
                         width: double.infinity,
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: scheme.surfaceContainerHighest,
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius:
+                              BorderRadius.circular(MarpromRadii.md),
+                          border: Border.all(
+                            color: MarpromBrand.of(context).hairline,
+                          ),
                         ),
                         child: SelectableText(
                           l10n.ticketsDriverFallbackCode(
                             ticket.driverFallbackCode,
                           ),
-                          style: Theme.of(context).textTheme.titleMedium,
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            fontFeatures: const [FontFeature.tabularFigures()],
+                          ),
                         ),
                       ),
                     ],
@@ -403,53 +430,51 @@ class _TicketViewScreenState extends ConsumerState<TicketViewScreen> {
                 onPressed: () => _readTicketAloud(context, ticket, locale),
               ),
               const SizedBox(height: 16),
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Wrap(
-                        alignment: WrapAlignment.spaceBetween,
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        spacing: 8,
-                        runSpacing: 8,
-                        children: [
-                          Text(
+              SurfaceCard(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const IconWell(icon: Icons.nfc_rounded, size: 42),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Text(
                             l10n.ticketsNfcStubTitle,
-                            style: Theme.of(context).textTheme.titleMedium,
+                            style: theme.textTheme.titleMedium,
                           ),
-                          StatusChip(
-                            type: TransitStatusType.info,
-                            label: l10n.ticketsNfcComingSoon,
-                            compact: true,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        l10n.ticketsNfcStubBody,
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                      if (validatedTime != null) ...[
-                        const SizedBox(height: 10),
-                        StatusChip(
-                          type: TransitStatusType.onTime,
-                          label: '${l10n.ticketsNfcValidated} '
-                              '(${TimeFormatUtils.formatTime24(validatedTime)})',
                         ),
                       ],
-                      const SizedBox(height: 14),
-                      BigButton(
-                        icon: Icons.nfc_rounded,
-                        label: l10n.ticketsNfcTapToSimulate,
-                        variant: BigButtonVariant.outlined,
-                        expanded: true,
-                        loading: _validatingNfc,
-                        onPressed: () => _simulateNfcValidation(ticket),
+                    ),
+                    const SizedBox(height: 10),
+                    StatusChip(
+                      type: TransitStatusType.info,
+                      label: l10n.ticketsNfcComingSoon,
+                      compact: true,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      l10n.ticketsNfcStubBody,
+                      style: theme.textTheme.bodyMedium,
+                    ),
+                    if (validatedTime != null) ...[
+                      const SizedBox(height: 10),
+                      StatusChip(
+                        type: TransitStatusType.onTime,
+                        label: '${l10n.ticketsNfcValidated} '
+                            '(${TimeFormatUtils.formatTime24(validatedTime)})',
                       ),
                     ],
-                  ),
+                    const SizedBox(height: 14),
+                    BigButton(
+                      icon: Icons.nfc_rounded,
+                      label: l10n.ticketsNfcTapToSimulate,
+                      variant: BigButtonVariant.outlined,
+                      expanded: true,
+                      loading: _validatingNfc,
+                      onPressed: () => _simulateNfcValidation(ticket),
+                    ),
+                  ],
                 ),
               ),
             ],

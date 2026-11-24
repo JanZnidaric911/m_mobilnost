@@ -91,7 +91,7 @@ class _TripPreviewAndStepsState extends ConsumerState<TripPreviewAndSteps> {
                       icon: Icons.map_outlined,
                       label: l10n.mapSwitchToMap,
                       variant: !_showListView
-                          ? BigButtonVariant.primary
+                          ? BigButtonVariant.selected
                           : BigButtonVariant.outlined,
                       onPressed: () => setState(() => _showListView = false),
                     ),
@@ -99,7 +99,7 @@ class _TripPreviewAndStepsState extends ConsumerState<TripPreviewAndSteps> {
                       icon: Icons.view_list_rounded,
                       label: l10n.mapSwitchToList,
                       variant: _showListView
-                          ? BigButtonVariant.primary
+                          ? BigButtonVariant.selected
                           : BigButtonVariant.outlined,
                       onPressed: () => setState(() => _showListView = true),
                     ),

@@ -47,7 +47,10 @@ class HomeScreen extends ConsumerWidget {
     final noticesAsync = ref.watch(serviceNoticesStreamProvider);
     final ticketsAsync = ref.watch(homeUserTicketsProvider);
 
+    // Keep showing the previous dashboard while it reloads, so the screen
+    // never flashes a spinner and replays its entrance animation.
     return dashboardAsync.when(
+      skipLoadingOnReload: true,
       loading: () => const LoadingStateView(),
       error: (_, _) => ErrorStateView(
         onRetry: () => ref.invalidate(homeDashboardProvider),
@@ -356,6 +359,16 @@ class _GreetingAndLocationHeader extends ConsumerWidget {
 
   final HomeDashboardData dashboard;
 
+  /// Localized "Tuesday, 24 November"; empty if the locale has no date data.
+  static String _todayLabel(BuildContext context) {
+    try {
+      return DateFormat.MMMMEEEEd(Localizations.localeOf(context).toString())
+          .format(DateTime.now());
+    } catch (_) {
+      return '';
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
@@ -425,7 +438,17 @@ class _GreetingAndLocationHeader extends ConsumerWidget {
               ),
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 18),
+          if (_todayLabel(context).isNotEmpty) ...[
+            Text(
+              _todayLabel(context).toUpperCase(),
+              style: theme.textTheme.labelSmall?.copyWith(
+                color: scheme.primary,
+                letterSpacing: 1.1,
+              ),
+            ),
+            const SizedBox(height: 6),
+          ],
           Text(
             l10n.homeGreeting,
             style: theme.textTheme.headlineMedium,
@@ -612,7 +635,9 @@ class _NextBusSummaryCard extends ConsumerWidget {
                 const SizedBox(height: 14),
                 // Wrap (not Row) so 200% text scaling moves the time below
                 // the countdown instead of overflowing.
-                Wrap(
+                SizedBox(
+                  width: double.infinity,
+                  child: Wrap(
                   alignment: WrapAlignment.spaceBetween,
                   crossAxisAlignment: WrapCrossAlignment.end,
                   runSpacing: 8,
@@ -659,6 +684,7 @@ class _NextBusSummaryCard extends ConsumerWidget {
                       ),
                     ),
                   ],
+                ),
                 ),
               ],
             ),
@@ -1370,7 +1396,7 @@ class _AskMarpromCard extends StatelessWidget {
           BigButton(
             icon: Icons.chat_bubble_outline_rounded,
             label: l10n.homeAskMarpromAction,
-            variant: BigButtonVariant.primary,
+            variant: BigButtonVariant.secondary,
             expanded: true,
             onPressed: () => showAskMarpromSheet(
               context,

@@ -449,7 +449,7 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
                     label: l10n.accountSignIn,
                     variant: _isSignUpMode
                         ? BigButtonVariant.outlined
-                        : BigButtonVariant.primary,
+                        : BigButtonVariant.selected,
                     onPressed: () {
                       setState(() {
                         _isSignUpMode = false;
@@ -461,7 +461,7 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
                     icon: Icons.person_add_alt_1_rounded,
                     label: l10n.accountSignUp,
                     variant: _isSignUpMode
-                        ? BigButtonVariant.primary
+                        ? BigButtonVariant.selected
                         : BigButtonVariant.outlined,
                     onPressed: () {
                       setState(() {

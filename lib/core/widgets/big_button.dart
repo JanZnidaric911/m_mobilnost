@@ -16,6 +16,10 @@ enum BigButtonVariant {
 
   /// High-clarity bordered outline action.
   outlined,
+
+  /// The chosen option in a group of toggles: soft red tint with a red ring,
+  /// so a selected state never competes with the screen's primary action.
+  selected,
 }
 
 /// Large accessible button (>= 56x56dp) displaying both an icon and text label.
@@ -136,10 +140,26 @@ class BigButton extends StatelessWidget {
           ),
           child: content,
         );
+      case BigButtonVariant.selected:
+        button = OutlinedButton(
+          onPressed: loading ? null : onPressed,
+          style: OutlinedButton.styleFrom(
+            minimumSize: minSize,
+            padding: padding,
+            shape: shape,
+            backgroundColor:
+                isHighContrast ? scheme.primary : scheme.primaryContainer,
+            foregroundColor:
+                isHighContrast ? scheme.onPrimary : scheme.onPrimaryContainer,
+            side: BorderSide(color: scheme.primary, width: 1.6),
+          ),
+          child: content,
+        );
     }
 
     return Semantics(
       button: true,
+      selected: variant == BigButtonVariant.selected ? true : null,
       enabled: onPressed != null && !loading,
       label: semanticLabel ?? label,
       child: PressableScale(child: button),

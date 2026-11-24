@@ -126,7 +126,8 @@ abstract final class AppTheme {
     // Fully-resolved (inherit: false) styles so theme switches can animate.
     final t = typo.englishLike
         .merge(scheme.brightness == Brightness.dark ? typo.white : typo.black)
-        .merge(textTheme);
+        .merge(textTheme)
+        .apply(fontFamily: MarpromTextStyles.fontFamily);
     final buttonShape = RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(MarpromRadii.md),
     );
@@ -138,6 +139,7 @@ abstract final class AppTheme {
 
     return ThemeData(
       useMaterial3: true,
+      fontFamily: MarpromTextStyles.fontFamily,
       colorScheme: scheme,
       scaffoldBackgroundColor: scaffoldBg,
       canvasColor: scaffoldBg,
@@ -288,14 +290,24 @@ abstract final class AppTheme {
         ),
       ),
       tabBarTheme: TabBarThemeData(
-        labelColor: scheme.onSurface,
+        // Pill-style tabs: the selected tab sits on a soft rounded chip.
+        labelColor: isDark ? scheme.onPrimaryContainer : scheme.onSurface,
         unselectedLabelColor: scheme.onSurfaceVariant,
         labelStyle: t.titleSmall!.copyWith(fontWeight: FontWeight.w800, fontSize: 14.5),
         unselectedLabelStyle:
             t.titleSmall!.copyWith(fontWeight: FontWeight.w600, fontSize: 14.5),
-        indicatorColor: scheme.primary,
-        indicatorSize: TabBarIndicatorSize.label,
-        dividerColor: brand.hairline,
+        indicator: ShapeDecoration(
+          color: isDark ? navIndicator : scheme.surface,
+          shape: const StadiumBorder(),
+          shadows: isDark ? null : brand.cardShadow,
+        ),
+        indicatorSize: TabBarIndicatorSize.tab,
+        indicatorAnimation: TabIndicatorAnimation.elastic,
+        dividerHeight: 0,
+        dividerColor: Colors.transparent,
+        overlayColor: const WidgetStatePropertyAll(Colors.transparent),
+        splashFactory: NoSplash.splashFactory,
+        labelPadding: const EdgeInsets.symmetric(horizontal: 10),
       ),
       chipTheme: ChipThemeData(
         backgroundColor: scheme.surface,

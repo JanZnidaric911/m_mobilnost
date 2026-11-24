@@ -41,6 +41,7 @@ abstract final class HighContrastTheme {
 
     return ThemeData(
       useMaterial3: true,
+      fontFamily: MarpromTextStyles.fontFamily,
       colorScheme: scheme,
       scaffoldBackgroundColor: MarpromColors.hcBlack,
       textTheme: textTheme,

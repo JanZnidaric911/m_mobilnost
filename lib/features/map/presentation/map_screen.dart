@@ -403,9 +403,12 @@ class _MapScreenState extends ConsumerState<MapScreen> {
             crossAxisAlignment: WrapCrossAlignment.center,
             alignment: WrapAlignment.spaceBetween,
             children: [
-              Text(
-                l10n.mapTitle,
-                style: Theme.of(context).textTheme.headlineSmall,
+              Semantics(
+                header: true,
+                child: Text(
+                  l10n.mapTitle,
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
               ),
               ConstrainedBox(
                 constraints: const BoxConstraints(minHeight: 56),
@@ -456,24 +459,29 @@ class _MapScreenState extends ConsumerState<MapScreen> {
               onChanged: (val) => setState(() => _query = val),
             ),
           ),
-          const SizedBox(height: 8),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: [
-              _MapToggleChip(
-                icon: Icons.accessible_rounded,
-                label: l10n.mapFilterAccessible,
-                selected: _accessibleOnly,
-                onTap: () => setState(() => _accessibleOnly = !_accessibleOnly),
-              ),
-              _MapToggleChip(
-                icon: Icons.directions_bus_rounded,
-                label: l10n.mapFilterActiveBuses,
-                selected: _showLiveBuses,
-                onTap: () => setState(() => _showLiveBuses = !_showLiveBuses),
-              ),
-            ],
+          const SizedBox(height: 10),
+          // One horizontally scrolling row of filters keeps the map tall.
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            clipBehavior: Clip.none,
+            child: Row(
+              children: [
+                _MapToggleChip(
+                  icon: Icons.accessible_rounded,
+                  label: l10n.mapFilterAccessible,
+                  selected: _accessibleOnly,
+                  onTap: () =>
+                      setState(() => _accessibleOnly = !_accessibleOnly),
+                ),
+                const SizedBox(width: 8),
+                _MapToggleChip(
+                  icon: Icons.directions_bus_rounded,
+                  label: l10n.mapFilterActiveBuses,
+                  selected: _showLiveBuses,
+                  onTap: () => setState(() => _showLiveBuses = !_showLiveBuses),
+                ),
+              ],
+            ),
           ),
         ],
       ),

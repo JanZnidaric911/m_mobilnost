@@ -74,12 +74,6 @@ class ShellScaffold extends StatelessWidget {
         ),
         actions: [
           _ShellAction(
-            semanticsLabel: 'Live Fleet & Stats',
-            tooltip: 'Avtobusi v živo',
-            icon: Icons.insights_rounded,
-            onPressed: () => context.push('/live'),
-          ),
-          _ShellAction(
             semanticsLabel: l10n.a11yNoticesButton,
             tooltip: l10n.navNotices,
             icon: Icons.notifications_outlined,

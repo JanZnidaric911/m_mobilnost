@@ -54,7 +54,7 @@ class OnboardingScreen extends ConsumerWidget {
                           : Icons.language_rounded,
                       label: label,
                       variant: settings.localeCode == code
-                          ? BigButtonVariant.primary
+                          ? BigButtonVariant.selected
                           : BigButtonVariant.outlined,
                       onPressed: () => notifier.setLocaleCode(code),
                     ),
@@ -147,7 +147,7 @@ class OnboardingScreen extends ConsumerWidget {
                     icon: Icons.my_location_rounded,
                     label: l10n.onboardingUseGps,
                     variant: !settings.locationManualMode
-                        ? BigButtonVariant.primary
+                        ? BigButtonVariant.selected
                         : BigButtonVariant.outlined,
                     onPressed: () => notifier.setLocationManualMode(false),
                   ),
@@ -155,7 +155,7 @@ class OnboardingScreen extends ConsumerWidget {
                     icon: Icons.pin_drop_outlined,
                     label: l10n.onboardingUseManualLocation,
                     variant: settings.locationManualMode
-                        ? BigButtonVariant.primary
+                        ? BigButtonVariant.selected
                         : BigButtonVariant.outlined,
                     onPressed: () => notifier.setLocationManualMode(true),
                   ),
