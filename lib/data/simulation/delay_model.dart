@@ -73,8 +73,8 @@ class DelayModel {
     required String lineId,
     required DateTime scheduledTime,
   }) {
-    // Align with seed notice for Line 18 morning off-peak cancellation.
-    if (lineId == '18' &&
+    // Align with seed notice for Line P18 morning off-peak cancellation.
+    if ((lineId == 'P18' || lineId == '18') &&
         scheduledTime.hour == 10 &&
         scheduledTime.minute >= 25 &&
         scheduledTime.minute <= 55) {

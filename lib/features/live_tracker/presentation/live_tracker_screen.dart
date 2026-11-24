@@ -833,6 +833,63 @@ class _LiveTrackerScreenState extends ConsumerState<LiveTrackerScreen> {
                 ),
                 const SizedBox(height: 12),
                 OccupancyStrip(level: bus.occupancy),
+                const SizedBox(height: 10),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .surfaceContainerHighest
+                        .withValues(alpha: 0.45),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.groups_rounded,
+                            size: 18,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                          const SizedBox(width: 6),
+                          Expanded(
+                            child: Text(
+                              '${bus.passengerCount} / ${bus.vehicleCapacity} potnikov (${bus.loadPercent}%)',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall
+                                  ?.copyWith(fontWeight: FontWeight.w800),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 6),
+                      Row(
+                        children: [
+                          Icon(
+                            bus.isElectric
+                                ? Icons.electric_bolt_rounded
+                                : Icons.directions_bus_rounded,
+                            size: 16,
+                            color: bus.isElectric
+                                ? const Color(0xFF6D28D9)
+                                : Theme.of(context).colorScheme.onSurfaceVariant,
+                          ),
+                          const SizedBox(width: 6),
+                          Expanded(
+                            child: Text(
+                              '${bus.vehicleId} • ${bus.vehicleModel} • ${bus.speedKmh.toStringAsFixed(0)} km/h',
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
                 const SizedBox(height: 16),
                 Wrap(
                   spacing: 10,

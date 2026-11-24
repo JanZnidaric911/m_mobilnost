@@ -502,13 +502,25 @@ class AskMarpromAssistant {
   }
 
   BusLine? _matchLine(String normalizedQuery, List<BusLine> lines) {
+    final gpMatch = RegExp(r'\b([gp]\s*\d{1,2})\b').firstMatch(normalizedQuery);
+    if (gpMatch != null) {
+      final code = gpMatch.group(1)!.replaceAll(' ', '').toUpperCase();
+      for (final line in lines) {
+        if (line.code.toUpperCase() == code) return line;
+      }
+    }
+
     final explicitMatch = RegExp(
-      r'(?:linij[aeuo]?|line|linie|liniju|bus|avtobus|autobus)\s*#?\s*(\d{1,2})\b',
+      r'(?:linij[aeuo]?|line|linie|liniju|bus|avtobus|autobus)\s*#?\s*([gp]?\d{1,2})\b',
     ).firstMatch(normalizedQuery);
     if (explicitMatch != null) {
-      final code = explicitMatch.group(1);
+      final raw = explicitMatch.group(1)!.toUpperCase();
       for (final line in lines) {
-        if (line.code == code) return line;
+        if (line.code.toUpperCase() == raw ||
+            line.code.toUpperCase() == 'G$raw' ||
+            line.code.toUpperCase() == 'P$raw') {
+          return line;
+        }
       }
     }
 
@@ -516,9 +528,13 @@ class AskMarpromAssistant {
     final strippedTimes =
         normalizedQuery.replaceAll(RegExp(r'\b\d{1,2}:\d{2}\b'), ' ');
     for (final match in RegExp(r'\b(\d{1,2})\b').allMatches(strippedTimes)) {
-      final code = match.group(1);
+      final raw = match.group(1)!;
       for (final line in lines) {
-        if (line.code == code) return line;
+        if (line.code == raw ||
+            line.code == 'G$raw' ||
+            line.code == 'P$raw') {
+          return line;
+        }
       }
     }
     return null;

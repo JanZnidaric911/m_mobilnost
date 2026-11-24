@@ -84,12 +84,16 @@ class LineBadge extends StatelessWidget {
               color: fgColor,
             ),
             const SizedBox(width: 5),
-            Text(
-              displayText,
-              style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                    color: fgColor,
-                    fontWeight: FontWeight.w800,
-                  ),
+            Flexible(
+              child: Text(
+                displayText,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                      color: fgColor,
+                      fontWeight: FontWeight.w800,
+                    ),
+              ),
             ),
           ],
         ),

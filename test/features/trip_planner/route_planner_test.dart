@@ -243,32 +243,38 @@ void main() {
     });
 
     test('filters out non-step-free stops and non-low-floor lines when accessibleOnly is true', () async {
-      // Pekre -> Tezno Ind. has direct Line 18 (isLowFloorDefault: false).
+      // UKC Maribor -> Pekre has direct Line P18 (isLowFloorDefault: false).
       final standard = await planner.planTrip(
-        origin: seedStopsById['pekre']!.position,
-        destination: seedStopsById['tezno_industrijska']!.position,
+        origin: seedStopsById['ukc_maribor']!.position,
+        destination: seedStopsById['pekre']!.position,
         mode: TripTimeMode.departAt,
-        targetTime: morning,
+        targetTime: DateTime(2026, 11, 23, 8, 15),
         accessibleOnly: false,
+        fewerTransfers: true,
+        maxWalkMeters: 350,
+        maxResults: 6,
       );
       expect(
         standard.any(
-          (opt) => opt.legs.any((l) => l.lineId == '18'),
+          (opt) => opt.legs.any((l) => l.lineId == 'P18'),
         ),
         isTrue,
       );
 
       final accessible = await planner.planTrip(
-        origin: seedStopsById['pekre']!.position,
-        destination: seedStopsById['tezno_industrijska']!.position,
+        origin: seedStopsById['ukc_maribor']!.position,
+        destination: seedStopsById['pekre']!.position,
         mode: TripTimeMode.departAt,
-        targetTime: morning,
+        targetTime: DateTime(2026, 11, 23, 8, 15),
         accessibleOnly: true,
+        fewerTransfers: true,
+        maxWalkMeters: 350,
+        maxResults: 6,
       );
       expect(accessible, isNotEmpty);
       for (final opt in accessible) {
         expect(opt.isAccessible, isTrue);
-        expect(opt.legs.any((l) => l.lineId == '18'), isFalse);
+        expect(opt.legs.any((l) => l.lineId == 'P18'), isFalse);
       }
     });
 

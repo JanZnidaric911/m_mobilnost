@@ -11,6 +11,9 @@ import 'package:m_mobilnost/core/accessibility/haptic_cues.dart';
 import 'package:m_mobilnost/core/accessibility/semantics_helpers.dart';
 import 'package:m_mobilnost/core/layout/breakpoints.dart';
 import 'package:m_mobilnost/core/layout/responsive_builder.dart';
+import 'package:m_mobilnost/core/maps/google_map_3d_widget.dart';
+import 'package:m_mobilnost/core/maps/google_map_models.dart';
+import 'package:m_mobilnost/core/maps/google_web_views.dart';
 import 'package:m_mobilnost/core/network/connectivity_provider.dart';
 import 'package:m_mobilnost/core/network/route_geometry_service.dart';
 import 'package:m_mobilnost/core/utils/distance.dart';
@@ -632,17 +635,53 @@ class _MapScreenState extends ConsumerState<MapScreen> {
         ),
     ];
 
-    return MariborTransitMap(
-      mapController: _mapController,
+    final polylines3D = <GoogleMap3DPolylineData>[
+      if (highlightedLine != null &&
+          highlightedDirection != null &&
+          roadPoints.length >= 2)
+        GoogleMap3DPolylineData(
+          id: '${highlightedLine.id}_${highlightedDirection.id}',
+          points: roadPoints,
+          color: highlightedLine.color,
+          strokeWidth: 7.0,
+        ),
+    ];
+
+    final markers3D = <GoogleMap3DMarkerData>[
+      for (final bus in activeBuses)
+        GoogleMap3DMarkerData(
+          id: bus.vehicleId,
+          position: bus.position,
+          label:
+              '${bus.lineCode} • ${bus.passengerCount}/${bus.vehicleCapacity} potnikov (${bus.loadPercent}%) → ${bus.nextStopName}',
+          isBus: true,
+          color: linesMap[bus.lineId]?.color ?? scheme.secondary,
+        ),
+      for (final item in filteredStops.take(20))
+        GoogleMap3DMarkerData(
+          id: 'stop_${item.stop.id}',
+          position: item.stop.position,
+          label: item.stop.name,
+          isBus: false,
+        ),
+    ];
+
+    final totalPassengers =
+        activeBuses.fold<int>(0, (sum, b) => sum + b.passengerCount);
+
+    return GoogleMap3DWidget(
       initialCenter: location.effectivePosition,
-      polylines: polylines,
-      markers: markers,
+      mapController: _mapController,
+      initialUse3D: !isFlutterTestEnvironment,
+      polylines3D: polylines3D,
+      markers3D: markers3D,
+      polylines2D: polylines,
+      markers2D: markers,
+      activeBusCount: activeBuses.isNotEmpty ? activeBuses.length : null,
+      totalPassengers: activeBuses.isNotEmpty ? totalPassengers : null,
       recenterLabel:
           location.isGps ? l10n.mapCenterOnMe : l10n.mapManualCenter,
-      recenterIcon: location.isGps
-          ? Icons.my_location_rounded
-          : Icons.location_city_rounded,
-      onRecenter: () {
+      onRecenter2D: () {
         ref.invalidate(userLocationProvider);
         _safeMoveMap(location.effectivePosition, 14.5);
       },

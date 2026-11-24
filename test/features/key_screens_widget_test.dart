@@ -67,11 +67,11 @@ Future<ProviderContainer> _buildAppContainer({
   final noticeRepo = MockNoticeRepository(boxName: 'key_ntc_$suffix');
   final now = DateTime(2026, 11, 23, 8, 5);
   final sampleBus = BusPosition(
-    vehicleId: 'MB-6-KEY',
-    lineId: '6',
-    lineCode: '6',
-    directionId: '6_out',
-    directionName: 'Vzpenjača – Glavna postaja',
+    vehicleId: 'MB-G6-KEY',
+    lineId: 'G6',
+    lineCode: 'G6',
+    directionId: 'G6_out',
+    directionName: 'Vzpenjača – AP Maribor – Melje',
     position: const LatLng(46.5457, 15.6448),
     progress: 0.45,
     speedKmh: 24.0,

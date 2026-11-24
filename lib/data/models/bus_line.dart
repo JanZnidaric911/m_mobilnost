@@ -67,6 +67,9 @@ class BusLine {
   /// Whether vehicles assigned to this line are normally low-floor accessible.
   final bool isLowFloorDefault;
 
+  /// Whether this is a high-frequency main Marprom trunk line (`G1`–`G6`).
+  bool get isMainTrunk => code.startsWith('G');
+
   /// Looks up a [LineDirection] by [directionId], returning null if absent.
   LineDirection? directionById(String directionId) {
     for (final direction in directions) {

@@ -173,17 +173,17 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Line 1'), findsOneWidget);
-    expect(find.text('Line 6'), findsOneWidget);
+    expect(find.text('Line G1'), findsOneWidget);
+    expect(find.text('Line G6'), findsOneWidget);
 
-    await tester.enterText(find.byType(TextField), 'Vzpenjača');
+    await tester.enterText(find.byType(TextField), 'vzpenjača');
     await tester.pumpAndSettle();
-    expect(find.text('Line 6'), findsOneWidget);
-    expect(find.text('Line 1'), findsNothing);
+    expect(find.text('Line G6'), findsOneWidget);
+    expect(find.text('Line G1'), findsNothing);
 
     await tester.tap(find.byIcon(Icons.star_outline_rounded).first);
     await tester.pumpAndSettle();
-    expect(container.read(favoritesProvider).isLineFavorite('6'), isTrue);
+    expect(container.read(favoritesProvider).isLineFavorite('G6'), isTrue);
   });
 
   testWidgets(
@@ -195,12 +195,12 @@ void main() {
     await tester.pumpWidget(
       _wrapWithRouter(
         container: container,
-        initialScreen: const LineDetailScreen(lineId: '6'),
+        initialScreen: const LineDetailScreen(lineId: 'G6'),
       ),
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Line 6'), findsWidgets);
+    expect(find.text('Line G6'), findsWidgets);
     expect(find.byType(FlutterMap), findsOneWidget);
     expect(find.byType(OccupancyStrip), findsWidgets);
     expect(find.byType(SimulatedDataBadge), findsOneWidget);
@@ -212,7 +212,7 @@ void main() {
     // Switch direction using Reverse direction button.
     await tester.tap(find.text('Reverse direction'));
     await tester.pumpAndSettle();
-    expect(find.text('Direction: Glavna postaja – Vzpenjača'), findsWidgets);
+    expect(find.text('Direction: Melje – AP Maribor – Vzpenjača'), findsWidgets);
 
     // Toggle map to list view.
     await tester.tap(find.text('List'));
@@ -284,11 +284,11 @@ void main() {
     final now = DateTime.now();
     final mockBuses = [
       BusPosition(
-        vehicleId: 'MB-6-0800',
-        lineId: '6',
-        lineCode: '6',
-        directionId: '6_out',
-        directionName: 'Vzpenjača – Glavna postaja',
+        vehicleId: 'MB-G6-0800',
+        lineId: 'G6',
+        lineCode: 'G6',
+        directionId: 'G6_out',
+        directionName: 'Vzpenjača – AP Maribor – Melje',
         position: const LatLng(46.5457, 15.6448),
         progress: 0.45,
         speedKmh: 24.0,
@@ -347,7 +347,7 @@ void main() {
     );
     await tester.tap(find.text('Next stop: Tabor'));
     await tester.pumpAndSettle();
-    expect(find.text('Showing route for line 6'), findsOneWidget);
+    expect(find.text('Showing route for line G6'), findsOneWidget);
 
     // Toggle to full List view (hides FlutterMap).
     await tester.tap(find.text('List'));
@@ -372,11 +372,11 @@ void main() {
       (WidgetTester tester) async {
     final now = DateTime.now();
     final earlyBus = BusPosition(
-      vehicleId: 'MB-6-EARLY',
-      lineId: '6',
-      lineCode: '6',
-      directionId: '6_out',
-      directionName: 'Vzpenjača – Glavna postaja',
+      vehicleId: 'MB-G6-EARLY',
+      lineId: 'G6',
+      lineCode: 'G6',
+      directionId: 'G6_out',
+      directionName: 'Vzpenjača – AP Maribor – Melje',
       position: const LatLng(46.5457, 15.6448),
       progress: 0.4,
       speedKmh: 28.0,
@@ -397,7 +397,7 @@ void main() {
     await tester.pumpWidget(
       _wrapWithRouter(
         container: earlyContainer,
-        initialScreen: const LiveTrackerScreen(initialLineId: '6'),
+        initialScreen: const LiveTrackerScreen(initialLineId: 'G6'),
       ),
     );
     await tester.pumpAndSettle();
@@ -419,15 +419,15 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Notify 5 min before arrival'));
     await tester.pumpAndSettle();
-    expect(find.text('Bus 6 is 2 min away from Tabor!'), findsOneWidget);
+    expect(find.text('Bus G6 is 2 min away from Tabor!'), findsOneWidget);
 
     // Verify late advice card cleanly on a delayed bus.
     final lateBus = BusPosition(
-      vehicleId: 'MB-1-LATE',
-      lineId: '1',
-      lineCode: '1',
-      directionId: '1_out',
-      directionName: 'Tezno Ind. – Rošpoh',
+      vehicleId: 'MB-G1-LATE',
+      lineId: 'G1',
+      lineCode: 'G1',
+      directionId: 'G1_out',
+      directionName: 'Tezno Ind. – AP Maribor',
       position: const LatLng(46.5576, 15.6455),
       progress: 0.5,
       speedKmh: 18.0,
@@ -448,7 +448,7 @@ void main() {
     await tester.pumpWidget(
       _wrapWithRouter(
         container: lateContainer,
-        initialScreen: const LiveTrackerScreen(initialLineId: '1'),
+        initialScreen: const LiveTrackerScreen(initialLineId: 'G1'),
       ),
     );
     await tester.pumpAndSettle();

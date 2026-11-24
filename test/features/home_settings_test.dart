@@ -131,8 +131,8 @@ void main() {
         useSimulatedLive: false,
       );
       expect(enReply.intent, AskIntent.lineInfo);
-      expect(enReply.text, contains('Line 6'));
-      expect(enReply.suggestedRoute, '/lines/6');
+      expect(enReply.text, contains('Line G6'));
+      expect(enReply.suggestedRoute, '/lines/G6');
       expect(enReply.freshness?.kind, DataSourceKind.cached);
     });
 

@@ -26,6 +26,11 @@ class BusPosition {
     required this.delaySeconds,
     required this.occupancy,
     required this.updatedAt,
+    this.passengerCount = 24,
+    this.vehicleCapacity = 85,
+    this.loadPercent = 28,
+    this.vehicleModel = "MAN Lion's City 12",
+    this.isElectric = false,
   });
 
   /// Unique vehicle or active trip identifier.
@@ -72,6 +77,21 @@ class BusPosition {
 
   /// Timestamp when this telemetry snapshot was produced.
   final DateTime updatedAt;
+
+  /// Estimated number of passengers currently aboard this vehicle.
+  final int passengerCount;
+
+  /// Rated passenger capacity (seated + standing) of this vehicle.
+  final int vehicleCapacity;
+
+  /// Load percentage (`0..100`) derived from Automatic Passenger Counting telemetry.
+  final int loadPercent;
+
+  /// Fleet vehicle model operating this run (e.g. `Iveco E-Way 12m`).
+  final String vehicleModel;
+
+  /// Whether this vehicle is a zero-emission battery-electric bus.
+  final bool isElectric;
 
   /// Semantic status derived from [delaySeconds] thresholds.
   TransitStatusType get status {

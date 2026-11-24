@@ -8,6 +8,8 @@ import 'package:m_mobilnost/core/accessibility/haptic_cues.dart';
 import 'package:m_mobilnost/core/accessibility/semantics_helpers.dart';
 import 'package:m_mobilnost/core/layout/breakpoints.dart';
 import 'package:m_mobilnost/core/layout/responsive_builder.dart';
+import 'package:m_mobilnost/core/maps/google_web_views.dart';
+import 'package:m_mobilnost/core/network/google_routes_service.dart';
 import 'package:m_mobilnost/core/utils/distance.dart';
 import 'package:m_mobilnost/core/utils/time_format.dart';
 import 'package:m_mobilnost/core/widgets/big_button.dart';
@@ -61,6 +63,7 @@ class _TripPlannerScreenState extends ConsumerState<TripPlannerScreen> {
   bool _needsDestinationWarning = false;
   Object? _searchError;
   List<TripOption> _results = const [];
+  GoogleRouteResult? _googleRouteSummary;
   int _selectedIndex = 0;
 
   Map<String, BusLine> _linesById = const {};
@@ -259,6 +262,17 @@ class _TripPlannerScreenState extends ConsumerState<TripPlannerScreen> {
       final planner = ref.read(routePlannerProvider);
       final effectiveTarget =
           _timeMode == TripTimeMode.leaveNow ? null : _targetTime;
+      final googleFuture = isFlutterTestEnvironment
+          ? Future.value(
+              GoogleRoutesService.buildOfflineFallback(
+                origin: _fromEndpoint!.position,
+                destination: _toEndpoint!.position,
+              ),
+            )
+          : ref.read(googleRoutesServiceProvider).computeRouteByCoordinates(
+                origin: _fromEndpoint!.position,
+                destination: _toEndpoint!.position,
+              );
       final options = await planner.planTrip(
         origin: _fromEndpoint!.position,
         destination: _toEndpoint!.position,
@@ -270,9 +284,11 @@ class _TripPlannerScreenState extends ConsumerState<TripPlannerScreen> {
         fewerTransfers: _fewerTransfers,
         maxWalkMeters: _maxWalkMeters,
       );
+      final googleSummary = await googleFuture;
       if (!mounted) return;
       setState(() {
         _results = options;
+        _googleRouteSummary = googleSummary;
         _selectedIndex = 0;
         _searching = false;
         _hasSearched = true;
@@ -672,6 +688,36 @@ class _TripPlannerScreenState extends ConsumerState<TripPlannerScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        if (_googleRouteSummary != null) ...[
+          Card(
+            color: Theme.of(context)
+                .colorScheme
+                .surfaceContainerHighest
+                .withValues(alpha: 0.45),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.route_rounded,
+                    size: 18,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'Google Routes API: ${_googleRouteSummary!.formattedDistanceKm} • ${_googleRouteSummary!.formattedDurationMinutes}',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.w700,
+                          ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
+        ],
         for (var i = 0; i < _results.length; i++) ...[
           TripOptionCard(
             option: _results[i],

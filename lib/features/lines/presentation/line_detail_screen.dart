@@ -51,6 +51,7 @@ class _LineDetailScreenState extends ConsumerState<LineDetailScreen> {
   int _directionIndex = 0;
   bool _showMap = true;
   late DayScheduleType _scheduleType;
+  int _selectedWeekday = DateTime.now().weekday;
   String? _selectedStopId;
   bool _showAllDepartures = false;
 
@@ -336,8 +337,8 @@ class _LineDetailScreenState extends ConsumerState<LineDetailScreen> {
     final departuresFuture = timetableRepo.getDeparturesForLine(
       line.id,
       direction.id,
-      at: at,
-      scheduleType: scheduleType,
+      at: sampleDateForWeekday(_selectedWeekday, anchor: at),
+      scheduleType: _scheduleType,
       stopId: stopId,
       useSimulatedLive: useSimulatedLive,
       isOffline: isOffline,
@@ -839,6 +840,37 @@ class _LineDetailScreenState extends ConsumerState<LineDetailScreen> {
                           ),
                   ),
               ],
+            ),
+            const SizedBox(height: 10),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  for (final entry in const [
+                    (DateTime.monday, 'Pon'),
+                    (DateTime.tuesday, 'Tor'),
+                    (DateTime.wednesday, 'Sre'),
+                    (DateTime.thursday, 'Čet'),
+                    (DateTime.friday, 'Pet'),
+                    (DateTime.saturday, 'Sob'),
+                    (DateTime.sunday, 'Ned'),
+                  ]) ...[
+                    ChoiceChip(
+                      label: Text(entry.$2),
+                      selected: _selectedWeekday == entry.$1,
+                      onSelected: (_) => setState(() {
+                        _selectedWeekday = entry.$1;
+                        _scheduleType = entry.$1 == DateTime.saturday
+                            ? DayScheduleType.saturday
+                            : (entry.$1 == DateTime.sunday
+                                ? DayScheduleType.sundayHoliday
+                                : DayScheduleType.weekday);
+                      }),
+                    ),
+                    const SizedBox(width: 6),
+                  ],
+                ],
+              ),
             ),
             const SizedBox(height: 12),
             Wrap(

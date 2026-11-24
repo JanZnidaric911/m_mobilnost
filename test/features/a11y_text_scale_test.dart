@@ -83,11 +83,11 @@ Future<ProviderContainer> _buildHighContrast200Container({
 
   final now = DateTime(2026, 11, 23, 8, 15);
   final sampleBus = BusPosition(
-    vehicleId: 'MB-6-A11Y',
-    lineId: '6',
-    lineCode: '6',
-    directionId: '6_out',
-    directionName: 'Vzpenjača – Glavna postaja',
+    vehicleId: 'MB-G6-A11Y',
+    lineId: 'G6',
+    lineCode: 'G6',
+    directionId: 'G6_out',
+    directionName: 'Vzpenjača – AP Maribor – Melje',
     position: const LatLng(46.5457, 15.6448),
     progress: 0.45,
     speedKmh: 25.0,
@@ -237,7 +237,7 @@ void main() {
       await _pumpAt200HighContrast(
         tester,
         container: container,
-        screen: const LineDetailScreen(lineId: '6'),
+        screen: const LineDetailScreen(lineId: 'G6'),
       );
       expect(find.byType(LineDetailScreen), findsOneWidget);
     });
@@ -279,7 +279,7 @@ void main() {
       await _pumpAt200HighContrast(
         tester,
         container: container,
-        screen: const LiveTrackerScreen(initialLineId: '6'),
+        screen: const LiveTrackerScreen(initialLineId: 'G6'),
       );
       expect(find.byType(LiveTrackerScreen), findsOneWidget);
     });

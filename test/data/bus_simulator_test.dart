@@ -206,6 +206,10 @@ void main() {
       expect(movedMeters, greaterThan(50));
       expect(movedAfter.speedKmh, greaterThan(0));
       expect(movedAfter.remainingStopsCount, greaterThan(0));
+      expect(movedAfter.passengerCount, greaterThan(0));
+      expect(movedAfter.passengerCount, lessThanOrEqualTo(movedAfter.vehicleCapacity));
+      expect(movedAfter.loadPercent, inInclusiveRange(1, 100));
+      expect(movedAfter.vehicleModel, isNotEmpty);
     });
 
     test('respects disabled-live toggle and cleans up timers on dispose', () async {

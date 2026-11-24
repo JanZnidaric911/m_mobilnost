@@ -26,6 +26,10 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>GMSApiKey</key>
+	<string>AIzaSyCJZoVbBxzgU4tt8Z-t4r5wxFM5eUOLdcs</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>M Mobilnost uporablja vašo lokacijo za prikaz najbližjih avtobusnih postajališč Marprom v Mariboru in načrtovanje poti.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

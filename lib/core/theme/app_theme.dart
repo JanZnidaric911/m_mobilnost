@@ -46,9 +46,9 @@ abstract final class AppTheme {
     final scheme = ColorScheme(
       brightness: Brightness.dark,
       primary: MarpromColors.transitBlueLight,
-      onPrimary: const Color(0xFF00284D),
-      primaryContainer: const Color(0xFF0E3960),
-      onPrimaryContainer: const Color(0xFFD6E7F7),
+      onPrimary: const Color(0xFF4A0410),
+      primaryContainer: const Color(0xFF6E0B1C),
+      onPrimaryContainer: const Color(0xFFFFDCE0),
       secondary: MarpromColors.mobilityGreenLight,
       onSecondary: const Color(0xFF033322),
       secondaryContainer: const Color(0xFF0A4733),

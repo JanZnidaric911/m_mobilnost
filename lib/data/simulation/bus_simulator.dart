@@ -167,6 +167,21 @@ class BusSimulator {
             at: now,
           );
 
+          final isElectric = line.id == 'G5' ||
+              line.id == 'G6' ||
+              ((line.id == 'G1' || line.id == 'G2') &&
+                  trip.tripId.hashCode.isEven);
+          final capacity = line.id == 'G5'
+              ? 70
+              : (line.isMainTrunk ? 85 : 65);
+          final passengerCount =
+              ((occupancy.loadPercent / 100.0) * capacity).round().clamp(1, capacity);
+          final vehicleModel = isElectric
+              ? (line.id == 'G5' ? 'Iveco E-Way 12m (E)' : "MAN Lion's City 12E")
+              : (line.isMainTrunk
+                  ? "MAN Lion's City 12"
+                  : 'Iveco Crossway LE');
+
           buses.add(
             BusPosition(
               vehicleId: 'MB-${line.code}-${trip.tripId.split('_').last}',
@@ -184,6 +199,11 @@ class BusSimulator {
               delaySeconds: delaySeconds,
               occupancy: occupancy.level,
               updatedAt: now,
+              passengerCount: passengerCount,
+              vehicleCapacity: capacity,
+              loadPercent: occupancy.loadPercent,
+              vehicleModel: vehicleModel,
+              isElectric: isElectric,
             ),
           );
         }

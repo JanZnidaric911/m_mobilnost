@@ -4,14 +4,23 @@ import 'package:flutter/material.dart';
 
 /// Core brand and semantic color constants for Marprom M Mobilnost 2.0.
 abstract final class MarpromColors {
-  /// Primary Marprom-inspired red, kept dark enough for WCAG contrast.
-  static const Color transitBlue = Color(0xFFB91C2C);
+  /// Authentic Marprom Maribor crimson red.
+  static const Color marpromRed = Color(0xFFC8102E);
 
-  /// Darker transit blue for containers and active states.
-  static const Color transitBlueDark = Color(0xFF7F1020);
+  /// Deep Marprom burgundy for headers, gradients, and active states.
+  static const Color marpromBurgundy = Color(0xFF880D1E);
 
-  /// Lighter transit blue for dark-mode surfaces.
-  static const Color transitBlueLight = Color(0xFFFF9AA5);
+  /// Skupina JHMB dark slate charcoal for corporate strips, footers, and hero contrast.
+  static const Color marpromCharcoal = Color(0xFF0F172A);
+
+  /// Primary Marprom crimson, kept dark enough for WCAG AA contrast.
+  static const Color transitBlue = marpromRed;
+
+  /// Darker Marprom burgundy for containers and active states.
+  static const Color transitBlueDark = marpromBurgundy;
+
+  /// Lighter Marprom rose-coral for dark-mode surfaces.
+  static const Color transitBlueLight = Color(0xFFFF8A9B);
 
   /// Secondary mobility green (WCAG AA on white: ~6.3:1).
   static const Color mobilityGreen = Color(0xFF0B6E4F);
@@ -20,7 +29,7 @@ abstract final class MarpromColors {
   static const Color mobilityGreenLight = Color(0xFF5CE0B3);
 
   /// Light mode background surface.
-  static const Color lightBackground = Color(0xFFF6F8FB);
+  static const Color lightBackground = Color(0xFFF5F7FA);
 
   /// Light mode elevated card surface.
   static const Color lightSurface = Color(0xFFFFFFFF);

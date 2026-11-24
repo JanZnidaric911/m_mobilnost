@@ -6,20 +6,49 @@
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="M Mobilnost 2.0 — Marprom Maribor city bus app">
-  <meta name="theme-color" content="#004D87">
+  <meta name="description" content="Marprom — Mestni potniški promet Maribor: vozni redi G1–G6 in P7–P19, načrtovalec poti, 3D zemljevid v živo, zasedenost avtobusov in prenos mobilne aplikacije M Mobilnost.">
+  <meta name="theme-color" content="#C8102E">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="M Mobilnost">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>M Mobilnost 2.0 — Marprom</title>
+  <title>Marprom — Mestni potniški promet Maribor | M Mobilnost</title>
   <link rel="manifest" href="manifest.json">
+
+  <style>
+    gmp-map-3d {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    iframe.map-top {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+  </style>
+
+  <!-- Google Maps JavaScript API with Photorealistic 3D Maps library -->
+  <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJZoVbBxzgU4tt8Z-t4r5wxFM5eUOLdcs&v=beta&libraries=maps3d,marker,geometry&loading=async"></script>
+  <script>
+    window.__marpromBindPolyline = async function(el, coordsJson) {
+      try {
+        if (window.google && window.google.maps && window.google.maps.importLibrary) {
+          await window.google.maps.importLibrary('maps3d');
+        }
+        el.path = JSON.parse(coordsJson);
+      } catch (e) {
+        // Ignore if maps3d library cannot load offline.
+      }
+    };
+  </script>
 </head>
 <body>
   <script src="flutter_bootstrap.js" async></script>

@@ -32,9 +32,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   group('Seed data integrity', () {
-    test('has 40 Maribor stops, 12 bidirectional lines, hubs, and 16 places', () {
-      expect(seedStops.length, 40);
-      expect(seedLines.length, 12);
+    test('has 54 Maribor stops, 19 bidirectional lines (G1-G6 & P7-P19), hubs, and 16 places', () {
+      expect(seedStops.length, 54);
+      expect(seedLines.length, 19);
       expect(seedPlaces.length, 16);
       expect(seedTicketTypes.length, 7);
 
@@ -82,7 +82,7 @@ void main() {
           }
         }
       }
-      expect(colors.length, 12);
+      expect(colors.length, 19);
 
       // Major transfer hubs serve multiple lines.
       expect(seedStopsById['glavni_trg']!.lineIds.length, greaterThanOrEqualTo(4));
@@ -101,7 +101,7 @@ void main() {
       expect(scheduleTypeForDate(saturday), DayScheduleType.saturday);
       expect(scheduleTypeForDate(sunday), DayScheduleType.sundayHoliday);
 
-      final line6 = seedLinesById['6']!;
+      final line6 = seedLinesById['G6']!;
       final weekdayTrips = generateTripsForDirection(
         line: line6,
         direction: line6.directions.first,
@@ -335,7 +335,7 @@ void main() {
       addTearDown(container.dispose);
 
       final lines = await container.read(lineRepositoryProvider).getLines();
-      expect(lines.length, 12);
+      expect(lines.length, 19);
 
       final nearest = await container
           .read(tripRepositoryProvider)

@@ -5,8 +5,10 @@ import 'package:go_router/go_router.dart';
 
 import '../core/accessibility/semantics_helpers.dart';
 import '../core/layout/breakpoints.dart';
+import '../core/theme/colors.dart';
 import '../core/widgets/offline_banner.dart';
 import '../core/widgets/simulated_data_badge.dart';
+import '../features/web_portal/presentation/marprom_web_scaffold.dart';
 
 /// Top-level adaptive scaffold hosting the 4 primary transit destinations.
 class ShellScaffold extends StatelessWidget {
@@ -47,13 +49,33 @@ class ShellScaffold extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFFB91C2C),
+        backgroundColor: MarpromColors.marpromRed,
         foregroundColor: Colors.white,
-        title: Text(
-          l10n.appTitle,
-          overflow: TextOverflow.ellipsis,
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const MarpromBrandEmblem(size: 30),
+            const SizedBox(width: 10),
+            Flexible(
+              child: Text(
+                l10n.appTitle,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontWeight: FontWeight.w800),
+              ),
+            ),
+          ],
         ),
         actions: [
+          Semantics(
+            button: true,
+            label: 'Live Fleet & Stats',
+            child: IconButton(
+              icon: const Icon(Icons.insights_rounded),
+              tooltip: 'Avtobusi v živo',
+              constraints: const BoxConstraints(minWidth: 56, minHeight: 56),
+              onPressed: () => context.push('/live'),
+            ),
+          ),
           Semantics(
             button: true,
             label: l10n.a11yNoticesButton,

@@ -16,7 +16,7 @@ class OccupancyModel {
   /// Seed used for deterministic occupancy variation.
   final int seed;
 
-  static const Set<String> _trunkLines = {'1', '2', '3', '6', '21'};
+  static const Set<String> _trunkLines = {'G1', 'G2', 'G3', 'G4', 'G5', 'G6'};
   static const Set<String> _centralHubStops = {
     'glavni_trg',
     'glavna_postaja',

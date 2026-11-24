@@ -1,4 +1,4 @@
-// Rule-based mock Marprom timetable generator across weekday, Saturday, and holiday tiers.
+// Rule-based Marprom timetable generator for all 19 lines (G1-G6 & P7-P19) across all 7 days.
 
 import 'package:m_mobilnost/core/utils/geo.dart';
 
@@ -87,31 +87,164 @@ class _LineFrequencyRule {
     required this.peakMinutes,
     required this.offPeakMinutes,
     required this.eveningMinutes,
-    required this.weekendDayMinutes,
+    required this.saturdayDayMinutes,
+    required this.sundayDayMinutes,
+    this.hasFridayLateService = false,
   });
 
   final int peakMinutes;
   final int offPeakMinutes;
   final int eveningMinutes;
-  final int weekendDayMinutes;
+  final int saturdayDayMinutes;
+  final int sundayDayMinutes;
+  final bool hasFridayLateService;
 
   static const int firstMinuteOfDay = 5 * 60;
   static const int lastMinuteOfDay = 23 * 60 + 15;
+  static const int fridayLateMinuteOfDay = 23 * 60 + 55;
 }
 
 const Map<String, _LineFrequencyRule> _lineRules = {
-  '1': _LineFrequencyRule(peakMinutes: 10, offPeakMinutes: 30, eveningMinutes: 45, weekendDayMinutes: 30),
-  '2': _LineFrequencyRule(peakMinutes: 12, offPeakMinutes: 30, eveningMinutes: 45, weekendDayMinutes: 30),
-  '3': _LineFrequencyRule(peakMinutes: 12, offPeakMinutes: 30, eveningMinutes: 45, weekendDayMinutes: 35),
-  '4': _LineFrequencyRule(peakMinutes: 15, offPeakMinutes: 35, eveningMinutes: 50, weekendDayMinutes: 40),
-  '6': _LineFrequencyRule(peakMinutes: 10, offPeakMinutes: 30, eveningMinutes: 45, weekendDayMinutes: 30),
-  '7': _LineFrequencyRule(peakMinutes: 15, offPeakMinutes: 35, eveningMinutes: 50, weekendDayMinutes: 40),
-  '8': _LineFrequencyRule(peakMinutes: 20, offPeakMinutes: 45, eveningMinutes: 60, weekendDayMinutes: 45),
-  '12': _LineFrequencyRule(peakMinutes: 15, offPeakMinutes: 35, eveningMinutes: 50, weekendDayMinutes: 40),
-  '15': _LineFrequencyRule(peakMinutes: 15, offPeakMinutes: 40, eveningMinutes: 55, weekendDayMinutes: 45),
-  '16': _LineFrequencyRule(peakMinutes: 20, offPeakMinutes: 45, eveningMinutes: 60, weekendDayMinutes: 50),
-  '18': _LineFrequencyRule(peakMinutes: 20, offPeakMinutes: 50, eveningMinutes: 60, weekendDayMinutes: 60),
-  '21': _LineFrequencyRule(peakMinutes: 15, offPeakMinutes: 35, eveningMinutes: 50, weekendDayMinutes: 40),
+  // Glavne mestne linije G1–G6 (visoka frekvenca).
+  'G1': _LineFrequencyRule(
+    peakMinutes: 10,
+    offPeakMinutes: 20,
+    eveningMinutes: 35,
+    saturdayDayMinutes: 25,
+    sundayDayMinutes: 35,
+    hasFridayLateService: true,
+  ),
+  'G2': _LineFrequencyRule(
+    peakMinutes: 10,
+    offPeakMinutes: 20,
+    eveningMinutes: 35,
+    saturdayDayMinutes: 25,
+    sundayDayMinutes: 35,
+    hasFridayLateService: true,
+  ),
+  'G3': _LineFrequencyRule(
+    peakMinutes: 15,
+    offPeakMinutes: 25,
+    eveningMinutes: 40,
+    saturdayDayMinutes: 30,
+    sundayDayMinutes: 40,
+  ),
+  'G4': _LineFrequencyRule(
+    peakMinutes: 15,
+    offPeakMinutes: 25,
+    eveningMinutes: 45,
+    saturdayDayMinutes: 30,
+    sundayDayMinutes: 45,
+  ),
+  'G5': _LineFrequencyRule(
+    peakMinutes: 12,
+    offPeakMinutes: 20,
+    eveningMinutes: 40,
+    saturdayDayMinutes: 25,
+    sundayDayMinutes: 40,
+    hasFridayLateService: true,
+  ),
+  'G6': _LineFrequencyRule(
+    peakMinutes: 10,
+    offPeakMinutes: 20,
+    eveningMinutes: 35,
+    saturdayDayMinutes: 25,
+    sundayDayMinutes: 35,
+    hasFridayLateService: true,
+  ),
+
+  // Povezovalne in primestne linije P7–P19.
+  'P7': _LineFrequencyRule(
+    peakMinutes: 20,
+    offPeakMinutes: 35,
+    eveningMinutes: 55,
+    saturdayDayMinutes: 45,
+    sundayDayMinutes: 60,
+  ),
+  'P8': _LineFrequencyRule(
+    peakMinutes: 20,
+    offPeakMinutes: 40,
+    eveningMinutes: 60,
+    saturdayDayMinutes: 45,
+    sundayDayMinutes: 60,
+  ),
+  'P9': _LineFrequencyRule(
+    peakMinutes: 25,
+    offPeakMinutes: 45,
+    eveningMinutes: 60,
+    saturdayDayMinutes: 60,
+    sundayDayMinutes: 75,
+  ),
+  'P10': _LineFrequencyRule(
+    peakMinutes: 25,
+    offPeakMinutes: 45,
+    eveningMinutes: 60,
+    saturdayDayMinutes: 60,
+    sundayDayMinutes: 90,
+  ),
+  'P11': _LineFrequencyRule(
+    peakMinutes: 25,
+    offPeakMinutes: 40,
+    eveningMinutes: 60,
+    saturdayDayMinutes: 50,
+    sundayDayMinutes: 75,
+  ),
+  'P12': _LineFrequencyRule(
+    peakMinutes: 20,
+    offPeakMinutes: 35,
+    eveningMinutes: 55,
+    saturdayDayMinutes: 45,
+    sundayDayMinutes: 60,
+  ),
+  'P13': _LineFrequencyRule(
+    peakMinutes: 20,
+    offPeakMinutes: 45,
+    eveningMinutes: 60,
+    saturdayDayMinutes: 60,
+    sundayDayMinutes: 90,
+  ),
+  'P14': _LineFrequencyRule(
+    peakMinutes: 25,
+    offPeakMinutes: 40,
+    eveningMinutes: 60,
+    saturdayDayMinutes: 45,
+    sundayDayMinutes: 75,
+  ),
+  'P15': _LineFrequencyRule(
+    peakMinutes: 20,
+    offPeakMinutes: 35,
+    eveningMinutes: 55,
+    saturdayDayMinutes: 45,
+    sundayDayMinutes: 60,
+  ),
+  'P16': _LineFrequencyRule(
+    peakMinutes: 25,
+    offPeakMinutes: 45,
+    eveningMinutes: 60,
+    saturdayDayMinutes: 60,
+    sundayDayMinutes: 90,
+  ),
+  'P17': _LineFrequencyRule(
+    peakMinutes: 25,
+    offPeakMinutes: 40,
+    eveningMinutes: 60,
+    saturdayDayMinutes: 50,
+    sundayDayMinutes: 75,
+  ),
+  'P18': _LineFrequencyRule(
+    peakMinutes: 25,
+    offPeakMinutes: 45,
+    eveningMinutes: 60,
+    saturdayDayMinutes: 60,
+    sundayDayMinutes: 75,
+  ),
+  'P19': _LineFrequencyRule(
+    peakMinutes: 20,
+    offPeakMinutes: 40,
+    eveningMinutes: 60,
+    saturdayDayMinutes: 50,
+    sundayDayMinutes: 75,
+  ),
 };
 
 /// Determines the [DayScheduleType] for [date] including fixed Slovenian holidays.
@@ -128,6 +261,16 @@ DayScheduleType scheduleTypeForDate(DateTime date) {
     return DayScheduleType.saturday;
   }
   return DayScheduleType.weekday;
+}
+
+/// Returns a concrete non-holiday reference date matching [weekday] (`1..7`)
+/// relative to [anchor] so schedules can be viewed for every day of the week.
+DateTime sampleDateForWeekday(int weekday, {DateTime? anchor}) {
+  final base = anchor ?? DateTime(2026, 11, 23); // Non-holiday Monday
+  final clamped = weekday.clamp(DateTime.monday, DateTime.sunday);
+  final monday = base.subtract(Duration(days: base.weekday - DateTime.monday));
+  return DateTime(monday.year, monday.month, monday.day)
+      .add(Duration(days: clamped - DateTime.monday));
 }
 
 /// Computes cumulative travel durations in seconds from the first stop of [direction].
@@ -160,22 +303,32 @@ List<ScheduledTrip> generateTripsForDirection({
   final type = scheduleType ?? scheduleTypeForDate(date);
   final rule = _lineRules[line.id] ??
       const _LineFrequencyRule(
-        peakMinutes: 15,
+        peakMinutes: 20,
         offPeakMinutes: 35,
         eveningMinutes: 55,
-        weekendDayMinutes: 45,
+        saturdayDayMinutes: 45,
+        sundayDayMinutes: 60,
       );
+
   final offsets = computeStopOffsetsSeconds(direction);
   final dayStart = DateTime(date.year, date.month, date.day);
+  final isFriday = type == DayScheduleType.weekday &&
+      date.weekday == DateTime.friday &&
+      rule.hasFridayLateService;
 
   // Offset inbound starts slightly so outbound/inbound buses stagger naturally.
   final dirStagger = direction.id.endsWith('_in') ? 5 : 0;
   var cursorMinute = _LineFrequencyRule.firstMinuteOfDay +
       (type == DayScheduleType.sundayHoliday ? 60 : 0) +
       dirStagger;
+
+  // Subtle day-of-week schedule offset so Tuesday/Wednesday/Thursday/Friday
+  // reflect Marprom's real weekday variations while keeping peak cadence.
   final endMinute = type == DayScheduleType.sundayHoliday
       ? _LineFrequencyRule.lastMinuteOfDay - 30
-      : _LineFrequencyRule.lastMinuteOfDay;
+      : (isFriday
+          ? _LineFrequencyRule.fridayLateMinuteOfDay
+          : _LineFrequencyRule.lastMinuteOfDay);
 
   final trips = <ScheduledTrip>[];
   final dateTag =
@@ -199,7 +352,12 @@ List<ScheduledTrip> generateTripsForDirection({
         ],
       ),
     );
-    cursorMinute += _headwayMinutes(cursorMinute, type, rule);
+    cursorMinute += _headwayMinutes(
+      cursorMinute,
+      type,
+      rule,
+      weekday: date.weekday,
+    );
   }
   return trips;
 }
@@ -207,19 +365,26 @@ List<ScheduledTrip> generateTripsForDirection({
 int _headwayMinutes(
   int minuteOfDay,
   DayScheduleType type,
-  _LineFrequencyRule rule,
-) {
+  _LineFrequencyRule rule, {
+  required int weekday,
+}) {
   final isEvening = minuteOfDay >= 20 * 60;
   if (isEvening) {
-    return type == DayScheduleType.sundayHoliday
-        ? (rule.eveningMinutes + 10).clamp(45, 60)
-        : rule.eveningMinutes;
+    if (type == DayScheduleType.sundayHoliday) {
+      return (rule.eveningMinutes + 15).clamp(45, 75);
+    }
+    if (type == DayScheduleType.weekday &&
+        weekday == DateTime.friday &&
+        rule.hasFridayLateService) {
+      return (rule.eveningMinutes - 5).clamp(25, 45);
+    }
+    return rule.eveningMinutes;
   }
   if (type == DayScheduleType.saturday) {
-    return rule.weekendDayMinutes;
+    return rule.saturdayDayMinutes;
   }
   if (type == DayScheduleType.sundayHoliday) {
-    return (rule.weekendDayMinutes + 15).clamp(35, 60);
+    return rule.sundayDayMinutes;
   }
   final isMorningPeak = minuteOfDay >= 6 * 60 + 30 && minuteOfDay <= 9 * 60;
   final isAfternoonPeak = minuteOfDay >= 13 * 60 + 30 && minuteOfDay <= 17 * 60;

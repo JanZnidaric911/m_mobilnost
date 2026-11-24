@@ -11,6 +11,7 @@ import '../../../core/accessibility/read_aloud.dart';
 import '../../../core/accessibility/semantics_helpers.dart';
 import '../../../core/layout/breakpoints.dart';
 import '../../../core/layout/responsive_builder.dart';
+import '../../../core/maps/google_web_views.dart';
 import '../../../core/theme/colors.dart';
 import '../../../core/utils/distance.dart';
 import '../../../core/utils/time_format.dart';
@@ -19,11 +20,14 @@ import '../../../core/widgets/occupancy_strip.dart';
 import '../../../core/widgets/simulated_data_badge.dart';
 import '../../../core/widgets/state_views.dart';
 import '../../../core/widgets/status_chip.dart';
+import '../../../data/models/bus_position.dart';
 import '../../../data/models/departure.dart';
 import '../../../data/models/service_notice.dart';
 import '../../../data/models/ticket.dart';
 import '../../../data/repositories/repository_providers.dart';
+import '../../../data/seed/seed_lines.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../live_tracker/domain/fleet_statistics_provider.dart';
 import '../domain/home_dashboard_provider.dart';
 import 'ask_marprom_sheet.dart';
 
@@ -153,11 +157,14 @@ class HomeScreen extends ConsumerWidget {
     required FavoritesState favorites,
   }) {
     if (favorites.lineIds.isEmpty && favorites.stopIds.isEmpty) return null;
+    final normalizedFavLineIds = {
+      for (final id in favorites.lineIds) seedLinesById[id]?.id ?? id,
+    };
     final now = DateTime.now();
     for (final notice in notices) {
       if (!notice.isActiveAt(now)) continue;
       final hitsLine =
-          notice.affectedLineIds.any(favorites.lineIds.contains);
+          notice.affectedLineIds.any(normalizedFavLineIds.contains);
       final hitsStop =
           notice.affectedStopIds.any(favorites.stopIds.contains);
       if (hitsLine || hitsStop) return notice;
@@ -238,14 +245,15 @@ class _FavoriteNoticeAlertCard extends StatelessWidget {
   }
 }
 
-class _GreetingAndLocationHeader extends StatelessWidget {
+class _GreetingAndLocationHeader extends ConsumerWidget {
   const _GreetingAndLocationHeader({required this.dashboard});
 
   final HomeDashboardData dashboard;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
+    final stats = ref.watch(fleetStatisticsProvider);
     final stop = dashboard.primaryStop;
     final dist = DistanceUtils.formatMeters(
       dashboard.distanceToPrimaryStopMeters.toDouble(),
@@ -257,6 +265,50 @@ class _GreetingAndLocationHeader extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Container(
+            width: double.infinity,
+            margin: const EdgeInsets.only(bottom: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [
+                  MarpromColors.marpromCharcoal,
+                  MarpromColors.marpromBurgundy,
+                ],
+              ),
+              borderRadius: BorderRadius.circular(14),
+            ),
+            child: InkWell(
+              onTap: () => context.push('/live'),
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.directions_bus_filled_rounded,
+                    color: Colors.white,
+                    size: 18,
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'Marprom Maribor • ${stats.activeBusCount} busov • ${stats.totalPassengers} potnikov (${stats.onTimePercent}% točno)',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12.5,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  const Icon(
+                    Icons.chevron_right_rounded,
+                    color: Colors.white70,
+                    size: 18,
+                  ),
+                ],
+              ),
+            ),
+          ),
           Text(
             l10n.homeGreeting,
             style: Theme.of(context).textTheme.headlineSmall,
@@ -349,6 +401,17 @@ class _NextBusSummaryCard extends ConsumerWidget {
     );
 
     final statusLabel = _departureStatusLabel(dep, l10n);
+    final liveBuses = isFlutterTestEnvironment
+        ? ref.read(busSimulatorProvider).snapshotAt(dashboard.fetchedAt)
+        : (ref.watch(liveBusesStreamProvider).valueOrNull ??
+            const <BusPosition>[]);
+    BusPosition? matchingLiveBus;
+    for (final bus in liveBuses) {
+      if (bus.lineId == dep.lineId && bus.directionId == dep.directionId) {
+        matchingLiveBus = bus;
+        break;
+      }
+    }
 
     return Card(
       child: InkWell(
@@ -395,6 +458,17 @@ class _NextBusSummaryCard extends ConsumerWidget {
               ),
               const SizedBox(height: 12),
               OccupancyStrip(level: dep.occupancy),
+              if (matchingLiveBus != null) ...[
+                const SizedBox(height: 8),
+                Text(
+                  '${matchingLiveBus.vehicleId} (${matchingLiveBus.vehicleModel}) • '
+                  '${matchingLiveBus.passengerCount}/${matchingLiveBus.vehicleCapacity} potnikov (${matchingLiveBus.loadPercent}%)',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        fontWeight: FontWeight.w700,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                ),
+              ],
               const SizedBox(height: 12),
               if (!settings.useSimulatedLive) ...[
                 Text(
