@@ -1003,7 +1003,7 @@ class _LiveTrackerScreenState extends ConsumerState<LiveTrackerScreen> {
     required Map<String, BusStop> stopsMap,
   }) {
     final lineColor = line?.color ?? Theme.of(context).colorScheme.primary;
-    final points = direction?.polyline ?? const <LatLng>[];
+    final points = direction?.roadPolyline ?? const <LatLng>[];
     final fit = points.length >= 2
         ? CameraFit.bounds(
             bounds: LatLngBounds.fromPoints(points),

@@ -3,7 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../../core/utils/polyline_codec.dart';
 import '../models/bus_line.dart';
+import 'seed_road_geometry.dart';
 import 'seed_stops.dart';
 
 /// Builds a two-direction [BusLine] whose route polylines derive from [seedStops].
@@ -31,7 +33,7 @@ BusLine _buildLine({
         terminalStopId: outboundStopIds.last,
         stopIds: outboundStopIds,
         polyline: _polylineFromStops(outboundStopIds),
-        roadPolyline: _roadPolylineFromStops(outboundStopIds),
+        roadSegments: _roadSegmentsFromStops(outboundStopIds),
       ),
       LineDirection(
         id: '${id}_in',
@@ -39,7 +41,7 @@ BusLine _buildLine({
         terminalStopId: inboundStopIds.last,
         stopIds: inboundStopIds,
         polyline: _polylineFromStops(inboundStopIds),
-        roadPolyline: _roadPolylineFromStops(inboundStopIds),
+        roadSegments: _roadSegmentsFromStops(inboundStopIds),
       ),
     ],
   );
@@ -51,25 +53,35 @@ List<LatLng> _polylineFromStops(List<String> stopIds) {
   ];
 }
 
-List<LatLng> _roadPolylineFromStops(List<String> stopIds) {
-  final stops = _polylineFromStops(stopIds);
-  if (stops.length < 2) return stops;
-  final road = <LatLng>[];
-  for (var i = 0; i < stops.length - 1; i++) {
-    final from = stops[i];
-    final to = stops[i + 1];
-    if (i == 0) road.add(from);
-    for (var step = 1; step <= 8; step++) {
-      final t = step / 8;
-      road.add(
-        LatLng(
-          from.latitude + (to.latitude - from.latitude) * t,
-          from.longitude + (to.longitude - from.longitude) * t,
-        ),
-      );
-    }
-  }
-  return road;
+/// Decoded road segments keyed like [seedRoadSegmentsEncoded], filled lazily
+/// so every stop pair is decoded at most once.
+final Map<String, List<LatLng>> _decodedSegmentCache = {};
+
+/// Returns the bundled road geometry from [fromId] to [toId], or the straight
+/// two-point segment between the stops when no geometry is bundled.
+List<LatLng> _roadSegment(String fromId, String toId) {
+  final from = seedStopsById[fromId]!.position;
+  final to = seedStopsById[toId]!.position;
+  final key = '$fromId>$toId';
+  final encoded = seedRoadSegmentsEncoded[key];
+  if (encoded == null || encoded.isEmpty) return [from, to];
+  return _decodedSegmentCache[key] ??= () {
+    final decoded = decodePolyline(encoded);
+    if (decoded.length < 2) return [from, to];
+    // Pin the ends to the exact stop coordinates: the 1e5 encoding rounds
+    // them, and adjacent segments must join without gaps.
+    decoded
+      ..[0] = from
+      ..[decoded.length - 1] = to;
+    return List<LatLng>.unmodifiable(decoded);
+  }();
+}
+
+List<List<LatLng>> _roadSegmentsFromStops(List<String> stopIds) {
+  return [
+    for (var i = 0; i < stopIds.length - 1; i++)
+      _roadSegment(stopIds[i], stopIds[i + 1]),
+  ];
 }
 
 /// All 19 Marprom Maribor bus lines: main trunk lines G1-G6 and connector lines P7-P19.

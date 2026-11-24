@@ -15,7 +15,6 @@ import 'package:m_mobilnost/core/maps/google_map_3d_widget.dart';
 import 'package:m_mobilnost/core/maps/google_map_models.dart';
 import 'package:m_mobilnost/core/maps/google_web_views.dart';
 import 'package:m_mobilnost/core/network/connectivity_provider.dart';
-import 'package:m_mobilnost/core/network/route_geometry_service.dart';
 import 'package:m_mobilnost/core/utils/distance.dart';
 import 'package:m_mobilnost/core/utils/geo.dart';
 import 'package:m_mobilnost/core/utils/time_format.dart';
@@ -506,18 +505,8 @@ class _MapScreenState extends ConsumerState<MapScreen> {
             : highlightedLine.directions.firstOrNull)
         : null;
 
-    final routeGeometry = highlightedLine != null &&
-            highlightedDirection != null
-        ? ref.watch(
-            routeGeometryProvider(
-              '${highlightedLine.id}|${highlightedDirection.id}',
-            ),
-          )
-        : const AsyncData<List<LatLng>>(<LatLng>[]);
-    final roadPoints = routeGeometry.valueOrNull ??
-        highlightedDirection?.roadPolyline ??
-        highlightedDirection?.polyline ??
-        const <LatLng>[];
+    // Bundled road-following geometry (passes through every stop in order).
+    final roadPoints = highlightedDirection?.roadPolyline ?? const <LatLng>[];
 
     final polylines = <Polyline>[
       if (highlightedLine != null &&
@@ -1072,8 +1061,12 @@ class _HighlightedLinePanel extends StatelessWidget {
                     ConstrainedBox(
                       constraints: const BoxConstraints(minHeight: 48),
                       child: dir.id == direction.id
-                          ? FilledButton(
+                          ? FilledButton.tonal(
                               onPressed: () {},
+                              style: FilledButton.styleFrom(
+                                backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                                foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
+                              ),
                               child: Text(dir.name),
                             )
                           : OutlinedButton(

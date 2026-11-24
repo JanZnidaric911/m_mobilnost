@@ -1353,8 +1353,9 @@ class RoutePlanner {
     required int toIdx,
     required _RideSegment ride,
   }) {
-    final poly = dir.polyline.length > toIdx
-        ? dir.polyline.sublist(fromIdx, toIdx + 1)
+    // Road-following geometry between the boarding and alighting stops.
+    final poly = dir.polyline.length > toIdx && fromIdx < toIdx
+        ? dir.roadPathBetween(fromIdx, toIdx)
         : <LatLng>[fromStop.position, toStop.position];
     final boardAt = ride.boardDep.estimatedTime;
     return TripLeg(

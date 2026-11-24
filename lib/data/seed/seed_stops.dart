@@ -9,7 +9,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'glavni_trg',
     name: 'Glavni trg',
-    position: LatLng(46.5576, 15.6455),
+    position: LatLng(46.55748, 15.64731),
     lineIds: ['G2', 'G4', 'G5', 'G6', 'P8', 'P9', 'P13', 'P17'],
     directionLabels: {
       'G2': 'Nova vas / AP Maribor',
@@ -27,7 +27,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'glavna_postaja',
     name: 'Avtobusna postaja Maribor',
-    position: LatLng(46.5594, 15.6561),
+    position: LatLng(46.55964, 15.65542),
     lineIds: [
       'G1',
       'G2',
@@ -61,7 +61,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'europark',
     name: 'Europark',
-    position: LatLng(46.5536, 15.6531),
+    position: LatLng(46.55451, 15.65147),
     lineIds: ['G3', 'G4', 'G5', 'P9', 'P12', 'P13', 'P16'],
     directionLabels: {
       'G3': 'Mestna krožna',
@@ -79,7 +79,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'ukc_maribor',
     name: 'UKC Maribor',
-    position: LatLng(46.5515, 15.6487),
+    position: LatLng(46.55311, 15.64647),
     lineIds: ['G1', 'G2', 'G5', 'G6', 'P11', 'P12', 'P13', 'P17', 'P18'],
     directionLabels: {
       'G1': 'Tezno / AP Maribor',
@@ -114,7 +114,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'tabor',
     name: 'Tabor',
-    position: LatLng(46.5457, 15.6448),
+    position: LatLng(46.54510, 15.64337),
     lineIds: ['G2', 'G3', 'G6', 'P14', 'P18'],
     directionLabels: {
       'G2': 'Nova vas / AP Maribor',
@@ -131,7 +131,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'studenci',
     name: 'Studenci',
-    position: LatLng(46.5568, 15.6226),
+    position: LatLng(46.55693, 15.61088),
     lineIds: ['G3', 'G4', 'P8', 'P19'],
     directionLabels: {
       'G4': 'Pobrežje / Mariborski otok',
@@ -145,7 +145,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'pekre',
     name: 'Pekre',
-    position: LatLng(46.5446, 15.5955),
+    position: LatLng(46.54857, 15.59420),
     lineIds: ['P8', 'P14', 'P18'],
     directionLabels: {
       'P8': 'Limbuš / AP Maribor',
@@ -160,7 +160,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'melje',
     name: 'Melje',
-    position: LatLng(46.5612, 15.6673),
+    position: LatLng(46.55988, 15.66857),
     lineIds: ['G3', 'G6', 'P10'],
     directionLabels: {
       'G6': 'Pohorska vzpenjača',
@@ -173,7 +173,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'mariborski_otok',
     name: 'Mariborski otok',
-    position: LatLng(46.5649, 15.6056),
+    position: LatLng(46.56869, 15.61435),
     lineIds: ['G4', 'P15'],
     directionLabels: {
       'G4': 'Studenci – Pobrežje',
@@ -187,7 +187,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'kamnica',
     name: 'Kamnica',
-    position: LatLng(46.5742, 15.6119),
+    position: LatLng(46.57245, 15.61272),
     lineIds: ['P7'],
     directionLabels: {'P7': 'Rošpoh / AP Maribor'},
     platform: '1',
@@ -199,7 +199,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'razvanje',
     name: 'Razvanje',
-    position: LatLng(46.5194, 15.6378),
+    position: LatLng(46.51541, 15.63561),
     lineIds: ['P11'],
     directionLabels: {'P11': 'AP Maribor'},
     platform: '1',
@@ -210,7 +210,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'pobrezje',
     name: 'Pobrežje',
-    position: LatLng(46.5469, 15.6698),
+    position: LatLng(46.54884, 15.66742),
     lineIds: ['G3', 'G4', 'P9', 'P12', 'P16'],
     directionLabels: {
       'G4': 'Studenci / Glavni trg',
@@ -228,7 +228,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'tezno',
     name: 'Tezno',
-    position: LatLng(46.5318, 15.6685),
+    position: LatLng(46.53168, 15.66872),
     lineIds: ['G1', 'P13'],
     directionLabels: {
       'G1': 'AP Maribor / Tezno Ind.',
@@ -257,7 +257,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'feri',
     name: 'Fakulteta za elektrotehniko',
-    position: LatLng(46.5593, 15.6382),
+    position: LatLng(46.55945, 15.64032),
     lineIds: ['P15'],
     directionLabels: {'P15': 'Bresternica / Košaki'},
     platform: 'A',
@@ -270,7 +270,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'lent',
     name: 'Lent',
-    position: LatLng(46.5553, 15.6416),
+    position: LatLng(46.55879, 15.63801),
     lineIds: ['G5'],
     directionLabels: {'G5': 'Koroška vrata / AP Maribor'},
     platform: '1',
@@ -295,7 +295,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'gosposvetska',
     name: 'Gosposvetska cesta',
-    position: LatLng(46.5612, 15.6368),
+    position: LatLng(46.56130, 15.63658),
     lineIds: ['G5', 'P19'],
     directionLabels: {
       'G5': 'Rotovž / AP Maribor',
@@ -309,7 +309,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'koroska_vrata',
     name: 'Koroška vrata',
-    position: LatLng(46.5598, 15.6312),
+    position: LatLng(46.56032, 15.63065),
     lineIds: ['G3', 'G5', 'P7', 'P15', 'P19'],
     directionLabels: {
       'G5': 'Rotovž – UKC – AP Maribor',
@@ -324,7 +324,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'ljudski_vrt',
     name: 'Ljudski vrt',
-    position: LatLng(46.5625, 15.6412),
+    position: LatLng(46.56202, 15.64337),
     lineIds: ['G3', 'P7'],
     directionLabels: {
       'G3': 'Mestna krožna',
@@ -339,7 +339,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'mestni_park',
     name: 'Mestni park',
-    position: LatLng(46.5653, 15.6468),
+    position: LatLng(46.56478, 15.64993),
     lineIds: ['G3', 'P7', 'P10', 'P17'],
     directionLabels: {
       'G3': 'Mestna krožna',
@@ -354,7 +354,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'piramida',
     name: 'Piramida',
-    position: LatLng(46.5675, 15.6520),
+    position: LatLng(46.56564, 15.65031),
     lineIds: ['P15', 'P17'],
     directionLabels: {
       'P15': 'Bresternica / Košaki',
@@ -367,7 +367,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'kosaki',
     name: 'Košaki',
-    position: LatLng(46.5698, 15.6615),
+    position: LatLng(46.57082, 15.65814),
     lineIds: ['P15', 'P17'],
     directionLabels: {
       'P15': 'Bresternica',
@@ -379,7 +379,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'meljski_hrib',
     name: 'Meljski hrib',
-    position: LatLng(46.5638, 15.6780),
+    position: LatLng(46.55845, 15.68142),
     lineIds: ['P10'],
     directionLabels: {'P10': 'Trčova / AP Maribor'},
     platform: '1',
@@ -388,7 +388,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'tezno_industrijska',
     name: 'Tezno – industrijska cona',
-    position: LatLng(46.5262, 15.6762),
+    position: LatLng(46.52840, 15.67265),
     lineIds: ['G1'],
     directionLabels: {'G1': 'AP Maribor'},
     platform: '1',
@@ -427,7 +427,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'vzpenjaca',
     name: 'Pohorje Vzpenjača',
-    position: LatLng(46.5343, 15.6042),
+    position: LatLng(46.53317, 15.59972),
     lineIds: ['G6'],
     directionLabels: {'G6': 'AP Maribor – Melje'},
     platform: 'A',
@@ -440,7 +440,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'betnava',
     name: 'Betnava',
-    position: LatLng(46.5310, 15.6375),
+    position: LatLng(46.52936, 15.63754),
     lineIds: ['G2', 'P11', 'P14'],
     directionLabels: {
       'G2': 'AP Maribor',
@@ -455,7 +455,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'nova_vas',
     name: 'Nova vas',
-    position: LatLng(46.5396, 15.6365),
+    position: LatLng(46.53389, 15.63503),
     lineIds: ['G2', 'P14', 'P18'],
     directionLabels: {
       'G2': 'AP Maribor / Betnava',
@@ -471,7 +471,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'dvorana_tabor',
     name: 'Dvorana Tabor',
-    position: LatLng(46.5476, 15.6402),
+    position: LatLng(46.54918, 15.63683),
     lineIds: ['G6', 'P14', 'P18'],
     directionLabels: {
       'G6': 'Vzpenjača / Melje',
@@ -487,7 +487,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'magdalena',
     name: 'Magdalena',
-    position: LatLng(46.5501, 15.6442),
+    position: LatLng(46.54976, 15.64561),
     lineIds: ['G2', 'G4', 'P18'],
     directionLabels: {
       'G2': 'AP Maribor / Betnava',
@@ -501,7 +501,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'titova_cesta',
     name: 'Titova cesta',
-    position: LatLng(46.5542, 15.6512),
+    position: LatLng(46.55446, 15.65053),
     lineIds: ['G1', 'G6', 'P11', 'P19'],
     directionLabels: {
       'G1': 'AP Maribor / Tezno Ind.',
@@ -516,7 +516,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'pobrezje_pokopalisce',
     name: 'Pobrežje – pokopališče',
-    position: LatLng(46.5442, 15.6815),
+    position: LatLng(46.55014, 15.66587),
     lineIds: ['P12', 'P16'],
     directionLabels: {
       'P12': 'Dobrava / AP Maribor',
@@ -530,7 +530,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'brezje',
     name: 'Brezje',
-    position: LatLng(46.5416, 15.6924),
+    position: LatLng(46.53634, 15.68869),
     lineIds: ['P16'],
     directionLabels: {'P16': 'Duplek / AP Maribor'},
     platform: '1',
@@ -539,7 +539,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'trznica',
     name: 'Tržnica Maribor',
-    position: LatLng(46.5567, 15.6484),
+    position: LatLng(46.55847, 15.64136),
     lineIds: ['G2', 'P9', 'P10'],
     directionLabels: {
       'G2': 'AP Maribor / Betnava',
@@ -555,7 +555,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'kardeljeva',
     name: 'Kardeljeva cesta',
-    position: LatLng(46.5412, 15.6478),
+    position: LatLng(46.54399, 15.63443),
     lineIds: ['G2', 'P11', 'P18'],
     directionLabels: {
       'G2': 'AP Maribor / Betnava',
@@ -569,7 +569,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'limbus',
     name: 'Limbuš',
-    position: LatLng(46.5572, 15.5852),
+    position: LatLng(46.55400, 15.58207),
     lineIds: ['P8', 'P14'],
     directionLabels: {
       'P8': 'AP Maribor',
@@ -582,7 +582,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'rospoh',
     name: 'Rošpoh',
-    position: LatLng(46.5845, 15.6032),
+    position: LatLng(46.58719, 15.61663),
     lineIds: ['P7'],
     directionLabels: {'P7': 'Kamnica – AP Maribor'},
     platform: '1',
@@ -591,7 +591,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'rotovz',
     name: 'Rotovž',
-    position: LatLng(46.5579, 15.6439),
+    position: LatLng(46.55742, 15.64564),
     lineIds: ['G5'],
     directionLabels: {'G5': 'Koroška vrata / UKC'},
     platform: 'A',
@@ -604,7 +604,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'city_center',
     name: 'TC City Maribor',
-    position: LatLng(46.5596, 15.6502),
+    position: LatLng(46.55883, 15.65107),
     lineIds: ['G1', 'P8', 'P12', 'P13'],
     directionLabels: {
       'G1': 'Tezno Ind. / AP Maribor',
@@ -620,7 +620,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'zrkovci',
     name: 'Zrkovci',
-    position: LatLng(46.5441, 15.6945),
+    position: LatLng(46.54964, 15.70039),
     lineIds: ['P9'],
     directionLabels: {'P9': 'Dogoše / AP Maribor'},
     platform: '1',
@@ -631,7 +631,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'dogose',
     name: 'Dogoše',
-    position: LatLng(46.5295, 15.7068),
+    position: LatLng(46.52160, 15.70561),
     lineIds: ['P9', 'P16'],
     directionLabels: {
       'P9': 'AP Maribor',
@@ -655,7 +655,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'malecnik',
     name: 'Malečnik',
-    position: LatLng(46.5582, 15.6986),
+    position: LatLng(46.55527, 15.69698),
     lineIds: ['P10'],
     directionLabels: {'P10': 'Trčova / AP Maribor'},
     platform: '1',
@@ -675,7 +675,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'dobrava',
     name: 'Pokopališče Dobrava',
-    position: LatLng(46.5338, 15.6845),
+    position: LatLng(46.51949, 15.69615),
     lineIds: ['P12'],
     directionLabels: {'P12': 'Supernova / AP Maribor'},
     platform: '1',
@@ -702,7 +702,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'strazun',
     name: 'Stražun',
-    position: LatLng(46.5418, 15.6732),
+    position: LatLng(46.54289, 15.65422),
     lineIds: ['P13'],
     directionLabels: {'P13': 'Cona Tezno / AP Maribor'},
     platform: '1',
@@ -712,7 +712,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'cona_tezno',
     name: 'Cona Tezno (Poštni center)',
-    position: LatLng(46.5234, 15.6765),
+    position: LatLng(46.52204, 15.67195),
     lineIds: ['P13'],
     directionLabels: {'P13': 'Stražun – AP Maribor'},
     platform: '1',
@@ -723,7 +723,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'eleclerc',
     name: 'E.Leclerc Maribor',
-    position: LatLng(46.5268, 15.6492),
+    position: LatLng(46.52124, 15.65165),
     lineIds: ['P14', 'P17'],
     directionLabels: {
       'P14': 'Tabor – Limbuš',
@@ -737,7 +737,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'bresternica',
     name: 'Bresternica',
-    position: LatLng(46.5698, 15.5762),
+    position: LatLng(46.56593, 15.57193),
     lineIds: ['P15'],
     directionLabels: {'P15': 'ŽP Maribor – Košaki'},
     platform: '1',
@@ -748,7 +748,7 @@ const List<BusStop> seedStops = [
   BusStop(
     id: 'dom_pod_gorco',
     name: 'Dom pod gorco',
-    position: LatLng(46.5529, 15.6124),
+    position: LatLng(46.55589, 15.61251),
     lineIds: ['P19'],
     directionLabels: {'P19': 'Center – Supernova'},
     platform: '1',

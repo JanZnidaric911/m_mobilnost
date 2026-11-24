@@ -90,7 +90,7 @@ class _WebLiveStatsPageState extends ConsumerState<WebLiveStatsPage> {
         if (_selectedLineFilter == null || _selectedLineFilter == line.id)
           GoogleMap3DPolylineData(
             id: line.id,
-            points: line.directions.first.polyline,
+            points: line.directions.first.roadPolyline,
             color: line.color,
             strokeWidth: _selectedLineFilter == line.id ? 7 : 4,
           ),
@@ -119,8 +119,7 @@ class _WebLiveStatsPageState extends ConsumerState<WebLiveStatsPage> {
       for (final line in seedLines)
         if (_selectedLineFilter == null || _selectedLineFilter == line.id)
           Polyline(
-            points: line.directions.first.roadPolyline ??
-                line.directions.first.polyline,
+            points: line.directions.first.roadPolyline,
             strokeWidth: _selectedLineFilter == line.id ? 5.5 : 3.0,
             color: line.color.withValues(
               alpha: _selectedLineFilter == line.id ? 0.95 : 0.65,

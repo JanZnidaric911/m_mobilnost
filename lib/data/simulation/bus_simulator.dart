@@ -1,8 +1,10 @@
-// Simulates active Marprom buses moving smoothly along route polylines over time.
+// Simulates active Marprom buses moving along road geometry between stops by stop times.
 
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:m_mobilnost/core/utils/geo.dart';
 
 import '../models/bus_position.dart';
@@ -96,10 +98,18 @@ class BusSimulator {
           direction: direction,
           date: now,
         );
-          final simulationPolyline =
-              direction.roadPolyline ?? direction.polyline;
-          final polylineMeters =
-              GeoUtils.polylineLengthMeters(simulationPolyline);
+        // Road length of every stop-to-stop segment, plus the distance from
+        // the first stop to the start of each segment (for [progress]).
+        final segmentMeters = [
+          for (var i = 0; i < direction.segmentCount; i++)
+            GeoUtils.polylineLengthMeters(direction.segment(i)),
+        ];
+        final segmentStartMeters = <double>[];
+        var polylineMeters = 0.0;
+        for (final meters in segmentMeters) {
+          segmentStartMeters.add(polylineMeters);
+          polylineMeters += meters;
+        }
 
         for (final trip in trips) {
           final delaySeconds = _delayModel.delaySecondsForTrip(
@@ -128,14 +138,13 @@ class BusSimulator {
               effectiveEnd.difference(effectiveStart).inSeconds;
           if (totalDurationSec <= 0) continue;
 
-          final elapsedSec = now.difference(effectiveStart).inSeconds;
-          final progress = (elapsedSec / totalDurationSec).clamp(0.0, 1.0);
-          final pos =
-              GeoUtils.interpolatePolyline(simulationPolyline, progress);
-
-          // Identify the next stop ahead of the vehicle based on adjusted stop times.
-          var nextIdx = direction.stopIds.length - 1;
-          for (var i = 0; i < trip.stopTimes.length; i++) {
+          // Identify the next stop ahead of the vehicle based on adjusted stop
+          // times; the vehicle is on the road segment prevIdx -> nextIdx.
+          final stopCount =
+              math.min(trip.stopTimes.length, direction.stopIds.length);
+          if (stopCount == 0) continue;
+          var nextIdx = stopCount - 1;
+          for (var i = 0; i < stopCount; i++) {
             final stopEta =
                 trip.stopTimes[i].add(Duration(seconds: delaySeconds));
             if (!stopEta.isBefore(now)) {
@@ -145,13 +154,49 @@ class BusSimulator {
           }
 
           final prevIdx = nextIdx > 0 ? nextIdx - 1 : 0;
+
+          // Fraction of the scheduled time between the two stops that has
+          // elapsed, mapped onto the road geometry of that segment.
+          final prevEta =
+              trip.stopTimes[prevIdx].add(Duration(seconds: delaySeconds));
+          final nextEta =
+              trip.stopTimes[nextIdx].add(Duration(seconds: delaySeconds));
+          final spanMs = nextEta.difference(prevEta).inMilliseconds;
+          final segmentFraction = nextIdx == prevIdx
+              ? 0.0
+              : spanMs <= 0
+                  ? 1.0
+                  : (now.difference(prevEta).inMilliseconds / spanMs)
+                      .clamp(0.0, 1.0);
+
+          final LatLng pos;
+          final double progress;
+          if (nextIdx == prevIdx || prevIdx >= segmentMeters.length) {
+            // At the first stop (or a degenerate direction).
+            pos = direction.polyline.isEmpty
+                ? GeoUtils.mariborCenter
+                : direction.polyline[math.min(
+                    nextIdx,
+                    direction.polyline.length - 1,
+                  )];
+            progress = 0.0;
+          } else {
+            pos = GeoUtils.interpolatePolyline(
+              direction.segment(prevIdx),
+              segmentFraction,
+            );
+            progress = polylineMeters > 0
+                ? ((segmentStartMeters[prevIdx] +
+                            segmentMeters[prevIdx] * segmentFraction) /
+                        polylineMeters)
+                    .clamp(0.0, 1.0)
+                : 0.0;
+          }
           final fromStopId = direction.stopIds[prevIdx];
           final nextStopId = direction.stopIds[nextIdx];
           final nextStopName = seedStopsById[nextStopId]?.name ?? nextStopId;
-          final nextStopEta =
-              trip.stopTimes[nextIdx].add(Duration(seconds: delaySeconds));
           final etaSeconds =
-              nextStopEta.difference(now).inSeconds.clamp(0, 7200);
+              nextEta.difference(now).inSeconds.clamp(0, 7200);
 
           // Derive realistic urban speed from route length / scheduled duration.
           final speedKmh = totalDurationSec > 0

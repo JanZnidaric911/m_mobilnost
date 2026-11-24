@@ -9,6 +9,7 @@ import 'package:latlong2/latlong.dart';
 
 import '../maps/google_maps_config.dart';
 import '../utils/geo.dart';
+import '../utils/polyline_codec.dart';
 
 /// Parsed result returned by Google Routes API v2 (`computeRoutes`) or offline fallback.
 @immutable
@@ -263,39 +264,8 @@ class GoogleRoutesService {
   }
 
   /// Decodes a Google Maps encoded polyline string into geographic [LatLng] coordinates.
-  static List<LatLng> decodeGooglePolyline(String encoded) {
-    final points = <LatLng>[];
-    var index = 0;
-    var lat = 0;
-    var lng = 0;
-
-    while (index < encoded.length) {
-      var shift = 0;
-      var result = 0;
-      int byte;
-      do {
-        byte = encoded.codeUnitAt(index++) - 63;
-        result |= (byte & 0x1f) << shift;
-        shift += 5;
-      } while (byte >= 0x20 && index < encoded.length);
-      final dlat = (result & 1) != 0 ? ~(result >> 1) : (result >> 1);
-      lat += dlat;
-
-      shift = 0;
-      result = 0;
-      do {
-        if (index >= encoded.length) break;
-        byte = encoded.codeUnitAt(index++) - 63;
-        result |= (byte & 0x1f) << shift;
-        shift += 5;
-      } while (byte >= 0x20 && index < encoded.length);
-      final dlng = (result & 1) != 0 ? ~(result >> 1) : (result >> 1);
-      lng += dlng;
-
-      points.add(LatLng(lat / 1e5, lng / 1e5));
-    }
-    return points;
-  }
+  static List<LatLng> decodeGooglePolyline(String encoded) =>
+      decodePolyline(encoded);
 }
 
 /// Provides the shared [GoogleRoutesService] instance.

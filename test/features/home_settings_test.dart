@@ -15,6 +15,7 @@ import 'package:m_mobilnost/core/network/connectivity_provider.dart';
 import 'package:m_mobilnost/core/network/data_freshness.dart';
 import 'package:m_mobilnost/core/widgets/big_button.dart';
 import 'package:m_mobilnost/core/widgets/occupancy_strip.dart';
+import 'package:m_mobilnost/core/utils/geo.dart';
 import 'package:m_mobilnost/core/widgets/status_chip.dart';
 import 'package:m_mobilnost/data/mock/mock_line_repository.dart';
 import 'package:m_mobilnost/data/mock/mock_notice_repository.dart';
@@ -22,6 +23,7 @@ import 'package:m_mobilnost/data/mock/mock_ticket_repository.dart';
 import 'package:m_mobilnost/data/mock/mock_timetable_repository.dart';
 import 'package:m_mobilnost/data/mock/mock_trip_repository.dart';
 import 'package:m_mobilnost/data/repositories/repository_providers.dart';
+import 'package:m_mobilnost/data/seed/seed_stops.dart';
 import 'package:m_mobilnost/data/seed/seed_tickets.dart';
 import 'package:m_mobilnost/features/home/domain/ask_marprom.dart';
 import 'package:m_mobilnost/features/home/presentation/home_screen.dart';
@@ -169,7 +171,14 @@ void main() {
       );
       expect(nearestReply.intent, AskIntent.nearestStop);
       expect(nearestReply.suggestedRoute, '/nearest-stop');
-      expect(nearestReply.text, contains('Drava'));
+      // Nearest seeded stop to the default user position (Maribor centre).
+      final expectedNearest = seedStops.reduce(
+        (a, b) => GeoUtils.haversineMeters(GeoUtils.mariborCenter, a.position) <=
+                GeoUtils.haversineMeters(GeoUtils.mariborCenter, b.position)
+            ? a
+            : b,
+      );
+      expect(nearestReply.text, contains(expectedNearest.name));
 
       final unknownReply = await assistant.ask(
         'blabla unrecognized prompt',

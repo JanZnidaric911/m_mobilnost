@@ -13,7 +13,6 @@ import 'package:m_mobilnost/core/accessibility/semantics_helpers.dart';
 import 'package:m_mobilnost/core/layout/breakpoints.dart';
 import 'package:m_mobilnost/core/layout/responsive_builder.dart';
 import 'package:m_mobilnost/core/network/connectivity_provider.dart';
-import 'package:m_mobilnost/core/network/route_geometry_service.dart';
 import 'package:m_mobilnost/core/utils/time_format.dart';
 import 'package:m_mobilnost/core/widgets/big_button.dart';
 import 'package:m_mobilnost/core/widgets/occupancy_strip.dart';
@@ -428,8 +427,12 @@ class _LineDetailScreenState extends ConsumerState<LineDetailScreen> {
                     ConstrainedBox(
                       constraints: const BoxConstraints(minHeight: 56),
                       child: i == dirIdx
-                          ? FilledButton(
+                          ? FilledButton.tonal(
                               onPressed: () {},
+                              style: FilledButton.styleFrom(
+                                backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                                foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
+                              ),
                               child: Text(line.directions[i].name),
                             )
                           : OutlinedButton(
@@ -519,12 +522,8 @@ class _LineDetailScreenState extends ConsumerState<LineDetailScreen> {
     required List<BusPosition> buses,
   }) {
     final l10n = context.l10n;
-    final routeGeometry = ref.watch(
-      routeGeometryProvider('${line.id}|${direction.id}'),
-    );
-    final points = routeGeometry.valueOrNull ??
-        direction.roadPolyline ??
-        direction.polyline;
+    // Bundled road-following geometry (passes through every stop in order).
+    final points = direction.roadPolyline;
     final fit = points.length >= 2
         ? CameraFit.bounds(
             bounds: LatLngBounds.fromPoints(points),
@@ -829,8 +828,12 @@ class _LineDetailScreenState extends ConsumerState<LineDetailScreen> {
                   ConstrainedBox(
                     constraints: const BoxConstraints(minHeight: 56),
                     child: type == _scheduleType
-                        ? FilledButton(
+                        ? FilledButton.tonal(
                             onPressed: () {},
+                            style: FilledButton.styleFrom(
+                              backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                              foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
+                            ),
                             child: Text(localizedDayScheduleLabel(l10n, type)),
                           )
                         : OutlinedButton(

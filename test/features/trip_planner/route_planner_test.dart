@@ -24,6 +24,7 @@ import 'package:m_mobilnost/data/models/place.dart';
 import 'package:m_mobilnost/data/models/trip_plan.dart';
 import 'package:m_mobilnost/data/repositories/line_repository.dart';
 import 'package:m_mobilnost/data/repositories/timetable_repository.dart';
+import 'package:m_mobilnost/data/seed/seed_lines.dart';
 import 'package:m_mobilnost/data/seed/seed_places.dart';
 import 'package:m_mobilnost/data/seed/seed_stops.dart';
 import 'package:m_mobilnost/data/seed/seed_timetables.dart';
@@ -202,6 +203,41 @@ void main() {
 
       final steps = planner.buildInstructions(first);
       expect(steps.any((s) => s.type == TripStepType.transferAt), isTrue);
+    });
+
+    test('bus leg polylines follow the line road geometry stop to stop', () async {
+      final options = await planner.planTrip(
+        origin: seedStopsById['pekre']!.position,
+        destination: seedStopsById['pobrezje']!.position,
+        mode: TripTimeMode.leaveNow,
+        targetTime: morning,
+      );
+      expect(options, isNotEmpty);
+
+      final busLegs = [
+        for (final option in options)
+          ...option.legs.where((l) => l.type == TripLegType.bus),
+      ];
+      expect(busLegs, isNotEmpty);
+      for (final leg in busLegs) {
+        final from = seedStopsById[leg.fromStopId]!.position;
+        final to = seedStopsById[leg.toStopId]!.position;
+        expect(leg.polyline.first, from);
+        expect(leg.polyline.last, to);
+
+        final dir = seedLinesById[leg.lineId]!.directionById(leg.directionId!)!;
+        final fromIdx = dir.stopIds.indexOf(leg.fromStopId!);
+        final toIdx = dir.stopIds.indexOf(leg.toStopId!);
+        expect(leg.polyline, dir.roadPathBetween(fromIdx, toIdx));
+        // Every stop ridden past lies on the drawn path, in order.
+        var cursor = 0;
+        for (final stopId in leg.intermediateStopIds) {
+          final stopPos = seedStopsById[stopId]!.position;
+          final found = leg.polyline.indexOf(stopPos, cursor);
+          expect(found, greaterThanOrEqualTo(cursor));
+          cursor = found;
+        }
+      }
     });
 
     test('supports departAt and arriveBy timing constraints accurately', () async {

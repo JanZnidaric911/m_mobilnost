@@ -1,94 +1,24 @@
-// Resolves drivable road geometry via Google Routes API v2 with OSRM & linear fallbacks.
-
-import 'dart:convert';
+// Resolves road-following geometry for seeded Marprom routes from bundled data.
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
 
 import '../../data/seed/seed_lines.dart';
-import 'google_routes_service.dart';
 
-/// Loads accurate drivable road geometry for seeded Marprom bus routes.
-/// Uses Google Routes API v2 first, then OSRM, falling back to interpolated stops offline.
+/// Road-following geometry for a seeded bus route direction.
+///
+/// The [key] has the form `'<lineId>|<directionId>'`. Geometry comes from the
+/// bundled per-stop-pair road segments (see `LineDirection.roadPolyline`), so
+/// no network access is needed and the result always passes through every
+/// stop in order. Unknown keys resolve to an empty list.
 final routeGeometryProvider =
     FutureProvider.family<List<LatLng>, String>((ref, key) async {
   final parts = key.split('|');
   if (parts.length != 2) return const <LatLng>[];
 
-  final line = seedLinesById[parts.first];
-  final direction = line?.directionById(parts.last);
+  final direction = seedLinesById[parts.first]?.directionById(parts.last);
   if (direction == null || direction.polyline.length < 2) {
     return const <LatLng>[];
   }
-
-  final fallback = _densify(direction.polyline);
-  final googleRoutes = ref.read(googleRoutesServiceProvider);
-
-  // 1. Try Google Routes API v2 with intermediate stops.
-  final waypoints = direction.polyline;
-  final googleResult = await googleRoutes.computeRouteByCoordinates(
-    origin: waypoints.first,
-    destination: waypoints.last,
-    intermediates: waypoints.length > 2
-        ? waypoints.sublist(1, waypoints.length - 1)
-        : const [],
-    includePolyline: true,
-  );
-  if (googleResult.isLiveApi && googleResult.polylinePoints.length >= 2) {
-    return googleResult.polylinePoints;
-  }
-
-  // 2. Fallback to OSRM driving geometry if Google Routes API is unavailable or restricted.
-  final coordinates = direction.polyline
-      .map((point) => '${point.longitude},${point.latitude}')
-      .join(';');
-  final uri = Uri.parse(
-    'https://router.project-osrm.org/route/v1/driving/$coordinates'
-    '?overview=full&geometries=geojson&steps=false',
-  );
-
-  try {
-    final response = await http.get(uri).timeout(const Duration(seconds: 6));
-    if (response.statusCode != 200) return fallback;
-
-    final data = jsonDecode(response.body) as Map<String, dynamic>;
-    final routes = data['routes'] as List<dynamic>?;
-    if (routes == null || routes.isEmpty) return fallback;
-
-    final geometry =
-        ((routes.first as Map<String, dynamic>)['geometry']
-            as Map<String, dynamic>?)?['coordinates'] as List<dynamic>?;
-    if (geometry == null || geometry.length < 2) return fallback;
-
-    return [
-      for (final coordinate in geometry)
-        LatLng(
-          (coordinate as List<dynamic>)[1] as double,
-          coordinate[0] as double,
-        ),
-    ];
-  } catch (_) {
-    return fallback;
-  }
+  return direction.roadPolyline;
 });
-
-List<LatLng> _densify(List<LatLng> stops) {
-  if (stops.length < 2) return List<LatLng>.from(stops);
-  final result = <LatLng>[];
-  for (var i = 0; i < stops.length - 1; i++) {
-    final from = stops[i];
-    final to = stops[i + 1];
-    if (i == 0) result.add(from);
-    for (var step = 1; step <= 8; step++) {
-      final t = step / 8;
-      result.add(
-        LatLng(
-          from.latitude + (to.latitude - from.latitude) * t,
-          from.longitude + (to.longitude - from.longitude) * t,
-        ),
-      );
-    }
-  }
-  return result;
-}
