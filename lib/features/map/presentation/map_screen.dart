@@ -806,8 +806,13 @@ class _MapToggleChip extends StatelessWidget {
     return ConstrainedBox(
       constraints: const BoxConstraints(minHeight: 56),
       child: selected
-          ? FilledButton.icon(
+          ? FilledButton.tonalIcon(
               onPressed: onTap,
+              style: FilledButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                foregroundColor:
+                    Theme.of(context).colorScheme.onPrimaryContainer,
+              ),
               icon: Icon(icon),
               label: Text(label),
             )

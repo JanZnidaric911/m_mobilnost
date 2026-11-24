@@ -2,6 +2,10 @@
 
 import 'package:flutter/material.dart';
 
+import '../theme/brand_tokens.dart';
+import '../theme/colors.dart';
+import 'motion.dart';
+
 /// Visual emphasis variants for [BigButton].
 enum BigButtonVariant {
   /// High-emphasis filled primary call to action.
@@ -51,7 +55,18 @@ class BigButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    final isHighContrast =
+        theme.extension<MarpromStatusColors>()?.highContrastBorders ?? false;
+    // Primary actions are always a true brand red with white text (except in
+    // high-contrast mode, which keeps its own yellow-on-black palette).
+    final Color? primaryBg = isHighContrast
+        ? null
+        : scheme.brightness == Brightness.dark
+            ? MarpromColors.redOnDark
+            : MarpromColors.marpromRed;
+    final Color? primaryFg = isHighContrast ? null : Colors.white;
     final content = Row(
       mainAxisSize: expanded ? MainAxisSize.max : MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -63,12 +78,12 @@ class BigButton extends StatelessWidget {
             child: CircularProgressIndicator(
               strokeWidth: 2.5,
               color: variant == BigButtonVariant.primary
-                  ? scheme.onPrimary
+                  ? (primaryFg ?? scheme.onPrimary)
                   : scheme.primary,
             ),
           )
         else
-          Icon(icon, size: 22),
+          Icon(icon, size: 21),
         const SizedBox(width: 10),
         Flexible(
           child: Text(
@@ -84,7 +99,7 @@ class BigButton extends StatelessWidget {
     final minSize = Size(expanded ? double.infinity : 56, 56);
     const padding = EdgeInsets.symmetric(horizontal: 20, vertical: 14);
     final shape = RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: BorderRadius.circular(MarpromRadii.md),
     );
 
     final Widget button;
@@ -93,6 +108,8 @@ class BigButton extends StatelessWidget {
         button = FilledButton(
           onPressed: loading ? null : onPressed,
           style: FilledButton.styleFrom(
+            backgroundColor: primaryBg,
+            foregroundColor: primaryFg,
             minimumSize: minSize,
             padding: padding,
             shape: shape,
@@ -125,7 +142,7 @@ class BigButton extends StatelessWidget {
       button: true,
       enabled: onPressed != null && !loading,
       label: semanticLabel ?? label,
-      child: button,
+      child: PressableScale(child: button),
     );
   }
 }

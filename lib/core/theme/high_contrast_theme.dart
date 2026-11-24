@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 
+import 'brand_tokens.dart';
 import 'colors.dart';
 import 'text_styles.dart';
 
@@ -43,7 +44,10 @@ abstract final class HighContrastTheme {
       colorScheme: scheme,
       scaffoldBackgroundColor: MarpromColors.hcBlack,
       textTheme: textTheme,
-      extensions: const [MarpromStatusColors.highContrast],
+      extensions: const [
+        MarpromStatusColors.highContrast,
+        MarpromBrand.highContrast,
+      ],
       focusColor: MarpromColors.hcYellow.withValues(alpha: 0.35),
       pageTransitionsTheme: reducedMotion
           ? const PageTransitionsTheme(
