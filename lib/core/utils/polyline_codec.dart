@@ -7,6 +7,8 @@ import 'package:latlong2/latlong.dart';
 ///
 /// Malformed or truncated input is decoded as far as possible; an empty
 /// string yields an empty list.
+// Note: negative deltas use -(x) - 1 instead of ~x, because on the web `~`
+// yields an unsigned 32-bit value and would corrupt every coordinate.
 List<LatLng> decodePolyline(String encoded) {
   final points = <LatLng>[];
   var index = 0;
@@ -22,7 +24,7 @@ List<LatLng> decodePolyline(String encoded) {
       result |= (byte & 0x1f) << shift;
       shift += 5;
     } while (byte >= 0x20 && index < encoded.length);
-    final dlat = (result & 1) != 0 ? ~(result >> 1) : (result >> 1);
+    final dlat = (result & 1) != 0 ? (-(result >> 1) - 1) : (result >> 1);
     lat += dlat;
 
     shift = 0;
@@ -33,7 +35,7 @@ List<LatLng> decodePolyline(String encoded) {
       result |= (byte & 0x1f) << shift;
       shift += 5;
     } while (byte >= 0x20 && index < encoded.length);
-    final dlng = (result & 1) != 0 ? ~(result >> 1) : (result >> 1);
+    final dlng = (result & 1) != 0 ? (-(result >> 1) - 1) : (result >> 1);
     lng += dlng;
 
     points.add(LatLng(lat / 1e5, lng / 1e5));
